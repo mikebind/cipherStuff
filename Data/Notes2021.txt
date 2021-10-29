@@ -1,0 +1,113 @@
+Cipher plans
+
+Keep track of indexing between various representations.  
+I always want to know for a given ciphertext character, what is its
+index in the original text. Also, I want to know what is the alphabet
+number I think it is, and how sure I am of that alphabet number.
+
+I want to have a way of dividing the text into islands where I think 
+the interpretation frame is the same.
+
+I want to be able to see the effect of a proposed substitution before I commit to it. 
+* Idea: bold? italic?
+
+I believed the period was 18 when there was a consistent frame, so to decode fully, we needed to fill an 18x26 matrix (substitution in 18 alphabets). 
+
+Words of at least 3 letters which are repeated are likely good frame markers. Also there are two repeated 2-word phrases, which are very good markers as well: 
+ bj ybf
+ bb ixb
+
+Here are repeated WORDS (space word space) assuming spaces are significant:
+# Three repetitions
+3 vp
+3 tia
+3 sm
+3 odv
+3 ncg
+3 knr
+3 ixp
+3 ixb
+3 ehl
+3 dx
+3 bj
+
+# Two repetitions (longest to shortest)
+2 qefojxd
+2 drsbwkq
+2 dnhq
+2 wzfz
+
+2 xtu
+2 xmq
+2 xme
+2 xae
+2 ybf
+2 vkc
+2 qtx
+2 qly
+2 nxy
+2 mwt
+2 kzr
+2 kzd
+2 jfu
+2 jfg
+2 hrs
+2 etl
+2 dgk
+2 bei
+2 adh
+
+2 zn
+2 wq
+2 we
+2 um
+2 tl
+2 tk
+2 sc
+2 oy
+2 kq
+2 ke
+2 ik
+2 ic
+2 hy
+2 hb
+2 gy
+2 dl
+2 dd
+2 cu
+2 bv
+
+2 bb
+
+2 n
+2 h
+
+# Next I want to know if there are repeated sequences of at least 4 letters (5 is probably better) in the no-space no-punct all-lowercase version
+# 5 Letters (only new info)
+ddkzd (appears as "dd kzd" and "dd kzdyw")
+yeppv (appears in "jkyeppv" and "jwyeppv")
+dnhqi (appears in "dnhq iq" and "dnhq ic" very close together(36 char apart))
+# 4 Letters (only new info)
+pjry (A bit skeptical, appears as "Yyfcgcwpjryo" and "Ipj R.
+Yrww", but spacing works out for early couple lines)
+odvi ("odv Idx", odv "ilna, very likely, esp as "odv" appears as a word 3x)
+fllt ("fllti" and "fllt", very likely)
+xmqo ("Xmq owgatp" and "bxm q ocy" sort of unlikely looking to me)
+bfon ("rbfon" and "ybf onhuyjt", could be)
+ynhn ("ynhn" and "nhzsyn 1890 hn um 1916", maybe)
+mmsb ("fhudmms. Bl " and "wqdnxymms bbqkhxug", fairly likely)
+tego ("xmtegoiqawhw" and "zbte go", not sure)
+vhpk ("yyqzpzvhpkn" and "fvhpkuy", likely?)
+plvk ("Mplv ke" and "wplv kmiwt", seems likely)
+
+# Representations:
+Original with line breaks?
+Original with spacing, punctuation, numbers, and capitalization. 
+NoSpacingNoPunct (no numbers, no capitalization either)
+Islands (sections of text where I think the NSNP frame is all the same within the same island)
+
+# Approach
+Start from words, find start index into NSNP (and therefore into OSP) of each set. Find mod-18 shifts between repetitions? Short distance mod-zero repeats should be initial islands. 
+
+
+
