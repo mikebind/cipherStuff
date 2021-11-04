@@ -23,7 +23,6 @@ w\:* {behavior:url(#default#VML);}
 <link rel=colorSchemeMapping href="index_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
-  <w:GrammarState>Clean</w:GrammarState>
   <w:TrackMoves>false</w:TrackMoves>
   <w:TrackFormatting/>
   <w:ValidateAgainstSchemas/>
@@ -6704,9 +6703,6 @@ span.msoDel
 	mso-style-name:"";
 	text-decoration:line-through;
 	color:red;}
-span.GramE
-	{mso-style-name:"";
-	mso-gram-e:yes;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
@@ -6802,41 +6798,39 @@ font-family:"Rockwell",serif'>Background</span></b></p>
 Science at Lawrence Technological University in Southfield, MI. I had recently
 given a summer course on basic cryptography to high school students, and my dad
 had been approached by someone (a student, I believe) who believed they had
-developed an &quot;uncrackable code<span class=GramE>&quot;, and</span> had
-provided my dad with a copy of a text enciphered with this uncrackable code.
-He, in turn, provided it to me, asking for my opinion on it. I was highly
-skeptical of the claim, and the first look at the ciphertext suggested to me
-that it would not be hard to crack. I saw that spaces, punctuation, numbers,
-capitalization all appeared to be preserved in the ciphertext and these could
-be quite helpful in deciphering (especially because word breaks are visible). I
-wondered if these might be decoy signals (e.g., perhaps a different plaintext
-had been used to supply the pattern of spaces, punctuation, etc.), but this was
-made less likely by the obvious repetition of whole words in the ciphertext.
-Repetition means regularity, and the fact I could easily see it just by looking
-through the ciphertext suggested that the code might even be trivial to crack.
-So, I started working on it some in my spare time in graduate school. I had to
-build my own tools for analysis in MATLAB, which was slow work, but I made some
-early progress <span class=GramE>fairly quickly</span>. I'll detail this work
-below, but the ultimate result was that while I made some progress, I also was
-surprised by the failure of the decipherment to just fall into place quickly. I
-got far enough to conclude that people more expert than myself and with better
-tools would likely have been able to crack it quickly, but that it was going to
-take me too much of my time when I needed to be focused on other things. I put
-it away. </p>
+developed an &quot;uncrackable code&quot;, and had provided my dad with a copy
+of a text enciphered with this uncrackable code. He, in turn, provided it to
+me, asking for my opinion on it. I was highly skeptical of the claim, and the
+first look at the ciphertext suggested to me that it would not be hard to
+crack. I saw that spaces, punctuation, numbers, capitalization all appeared to
+be preserved in the ciphertext and these could be quite helpful in deciphering
+(especially because word breaks are visible). I wondered if these might be
+decoy signals (e.g., perhaps a different plaintext had been used to supply the
+pattern of spaces, punctuation, etc.), but this was made less likely by the
+obvious repetition of whole words in the ciphertext. Repetition means
+regularity, and the fact I could easily see it just by looking through the
+ciphertext suggested that the code might even be trivial to crack. So, I
+started working on it some in my spare time in graduate school. I had to build
+my own tools for analysis in MATLAB, which was slow work, but I made some early
+progress fairly quickly. I'll detail this work below, but the ultimate result
+was that while I made some progress, I also was surprised by the failure of the
+decipherment to just fall into place quickly. I got far enough to conclude that
+people more expert than myself and with better tools would likely have been
+able to crack it quickly, but that it was going to take me too much of my time
+when I needed to be focused on other things. I put it away. </p>
 
-<p class=MsoNormal><span class=GramE>Every once in a while</span>, I would
-remember about it and think that it would be a nice problem to work on, but I
-couldn't find it, lost in digital archives somewhere. Then, in 2021, when I was
-going though backup CD's which had been in a box in the garage, I found the
-original ciphertext as well as some of the code I had written back then,
-although I did not find most of my notes or organization and did not record how
-far I had gotten. Once rediscovered, I tackled it with gusto, and this time,
-though it took many hours, I did crack it. The encipherment scheme is <span
-class=GramE>more clever</span> than I initially gave credit for, and there may
-be some cleverness I have not caught, but I can now fully decipher and
-re-encipher the text using a relatively small set of relatively simple rules.
-What follows is my account of how I was ultimately able to crack this
-&quot;uncrackable code&quot;.</p>
+<p class=MsoNormal>Every once in a while, I would remember about it and think
+that it would be a nice problem to work on, but I couldn't find it, lost in
+digital archives somewhere. Then, in 2021, when I was going though backup CD's
+which had been in a box in the garage, I found the original ciphertext as well
+as some of the code I had written back then, although I did not find most of my
+notes or organization and did not record how far I had gotten. Once
+rediscovered, I tackled it with gusto, and this time, though it took many
+hours, I did crack it. The encipherment scheme is more clever than I initially
+gave credit for, and there may be some cleverness I have not caught, but I can
+now fully decipher and re-encipher the text using a relatively small set of
+relatively simple rules. What follows is my account of how I was ultimately
+able to crack this &quot;uncrackable code&quot;.</p>
 
 <p class=MsoNormal>To orient the reader, the structure of this document is as
 follows: Part 1 has what I can reconstruct from my initial attempt in 2002.
@@ -6871,22 +6865,21 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 text, as opposed to the plaintext, the unencoded version), I was surprised to
 see what looked like a normal pattern of capitalization, punctuation, and
 spacing. A common practice in cryptography is for enciphered texts to have all
-these features removed, because they can help give an <span class=GramE>adversary
-hints</span> for decryption. What kind of hints? As a simple example, English
-has only two one-letter words, 'a' and 'I', so if we see a single letter word,
-and it's capitalized and not at the start of a sentence, then we can assume
-that corresponds to a plaintext letter <span class=PlaintextChar>'i'</span>
-with <span class=GramE>pretty high</span> confidence. Similarly, for 'a' if it
-is not capitalized. 'a' and 'i' are the 3<sup>rd</sup> and 5<sup>th</sup> most
-common letters in typical English; between them they account for approximately
-15% of letters. For a monoalphabetic cipher, where there is a one-to-one
-mapping beween plaintext letters and ciphertext letters, this is a pretty good
-start. Then, since spaces give us word boundaries, we can use the fact that
-'the' is, by far, the most common three-letter word in English to identify 't',
-'h', and 'e', which together give us another ~28% of letters. For a
-monoalphabetic cipher, filling in over 40% from just these 5 letters would
-typically make filling in the rest of the translation <span class=GramE>pretty
-easy</span>. </p>
+these features removed, because they can help give an adversary hints for
+decryption. What kind of hints? As a simple example, English has only two
+one-letter words, 'a' and 'I', so if we see a single letter word, and it's
+capitalized and not at the start of a sentence, then we can assume that
+corresponds to a plaintext letter <span class=PlaintextChar>'i'</span> with
+pretty high confidence. Similarly, for 'a' if it is not capitalized. 'a' and
+'i' are the 3<sup>rd</sup> and 5<sup>th</sup> most common letters in typical
+English; between them they account for approximately 15% of letters. For a
+monoalphabetic cipher, where there is a one-to-one mapping beween plaintext
+letters and ciphertext letters, this is a pretty good start. Then, since spaces
+give us word boundaries, we can use the fact that 'the' is, by far, the most
+common three-letter word in English to identify 't', 'h', and 'e', which
+together give us another ~28% of letters. For a monoalphabetic cipher, filling
+in over 40% from just these 5 letters would typically make filling in the rest
+of the translation pretty easy. </p>
 
 <p class=MsoNormal>So, if this were a monoalphabetic cipher, cracking it would
 be over almost before we had begun. However, there were two early hints that it
@@ -6972,9 +6965,9 @@ class=PlaintextChar>'suqqqqrp'</span>, <span class=PlaintextChar>'suqzqzrp'</spa
 <span class=PlaintextChar>'suzqzqrp'</span>, <span class=PlaintextChar>'suzqqqrp'</span>,
 <span class=PlaintextChar>'suqzqqrp'</span>, <span class=PlaintextChar>'suqqzqrp'</span>,
 etc. If this recipient has only three tries to enter this password before being
-locked out of the account, he is going to be <span class=GramE>pretty
-frustrated</span>. The password was obtained by the informant but obscured by
-the ambiguous encipherment scheme and unable to be fully communcated. </p>
+locked out of the account, he is going to be pretty frustrated. The password
+was obtained by the informant but obscured by the ambiguous encipherment scheme
+and unable to be fully communcated. </p>
 
 <p class=MsoNormal>The limitations of message ambiguity mean that one would
 typically not go too far down the road of lumping and splitting symbols. Even
@@ -7000,14 +6993,14 @@ that ciphertext symbol is a mix of the frequencies of those 5 plaintext
 letters. This will tend to flatten the frequency distribution of the ciphertext
 symbols because there is a lot less variation in the weighted average of 5 plain
 letter frequencies than in individual plain letter frequencies. And, unlike in
-the quasi-monoalphabetic case, <span class=GramE>as long as</span> you know the
-enciphering alphabets, their sequence, and which one is first, there is no
-ambiguity in the message. That is, you know exactly the intended plaintext
-letter for every letter in the ciphertext. The more cipher alphabets there are,
-the flatter the frequency distribution will tend to become. If there were 26
-cipher alphabets, it would be trivial to obtain a perfectly flat frequency
-distribution, with every plaintext letter equally likely to be represented by
-any ciphertext letter, and vice versa. </p>
+the quasi-monoalphabetic case, as long as you know the enciphering alphabets,
+their sequence, and which one is first, there is no ambiguity in the message.
+That is, you know exactly the intended plaintext letter for every letter in the
+ciphertext. The more cipher alphabets there are, the flatter the frequency
+distribution will tend to become. If there were 26 cipher alphabets, it would
+be trivial to obtain a perfectly flat frequency distribution, with every
+plaintext letter equally likely to be represented by any ciphertext letter, and
+vice versa. </p>
 
 <p class=MsoNormal>While this frequency flattening makes it harder for
 unintended recipients to crack polyalphabetic ciphers, there is a significant
@@ -7035,8 +7028,8 @@ key phrase in alphabetical (or reverse alphabetical order). </p>
   padding:0in 5.4pt 0in 5.4pt;height:119.2pt'>
   <p class=MsoListParagraph style='margin-bottom:0in;text-indent:-.25in;
   line-height:normal'>1.<span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  </span>Example Key Phrase: <span class=CodeChar>&quot;<span class=GramE>night
-  time</span> at the zoo is quiet&quot;</span></p>
+  </span>Example Key Phrase: <span class=CodeChar>&quot;night time at the zoo
+  is quiet&quot;</span></p>
   <p class=MsoListParagraph style='margin-bottom:0in;text-indent:-.25in;
   line-height:normal'>2.<span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </span>Remove spaces and duplicate letters: <span class=CiphertextChar>'nightmeazosqu'</span></p>
@@ -7136,17 +7129,17 @@ decipherment, one just needs a &quot;key word&quot; (or phrase). If we use the
 example key word <span class=CodeChar>LEMON</span>, then the set of cipher
 alphabets used would be the rows of the Vigenere square which start with the
 letters of the key word. Thus, the first plaintext letter would be enciphered
-using the <span class=CodeChar>L</span> row (<span class=GramE>e.g.</span>
-plain <span class=PlaintextChar>'f'</span> would become cipher <span
-class=CiphertextChar>'q'</span>, because <span class=CiphertextChar>'q'</span>
-is the intersection of the <span class=CodeChar>L</span> row with the <span
-class=PlaintextChar>'f'</span> column), the second plaintext letter would be
-enciphered using the <span class=CodeChar>E</span> row, the third with the <span
-class=CodeChar>M</span> row, the fourth with the <span class=CodeChar>E</span>
-row, and the fifth with the N row. Next, the sixth plaintext letter (and the 11<sup>th</sup>
-and the 16<sup>th</sup> and every fifth letter after that) would be enciphered
-using the <span class=CodeChar>L</span> row again. The combination of a
-Vigenere square and a key word is a &quot;Vigenere cipher.&quot; </p>
+using the <span class=CodeChar>L</span> row (e.g. plain <span
+class=PlaintextChar>'f'</span> would become cipher <span class=CiphertextChar>'q'</span>,
+because <span class=CiphertextChar>'q'</span> is the intersection of the <span
+class=CodeChar>L</span> row with the <span class=PlaintextChar>'f'</span>
+column), the second plaintext letter would be enciphered using the <span
+class=CodeChar>E</span> row, the third with the <span class=CodeChar>M</span>
+row, the fourth with the <span class=CodeChar>E</span> row, and the fifth with
+the N row. Next, the sixth plaintext letter (and the 11<sup>th</sup> and the 16<sup>th</sup>
+and every fifth letter after that) would be enciphered using the <span
+class=CodeChar>L</span> row again. The combination of a Vigenere square and a
+key word is a &quot;Vigenere cipher.&quot; </p>
 
 <p class=MsoNormal>Historically, Vigenere ciphers were once considered
 &quot;unbreakable&quot; unless you could guess the key. In addition,
@@ -7164,9 +7157,9 @@ unbreakable, and a general method of cracking it was worked out and published
 in the mid-1800s. I basically followed that method next, but before we go
 through that, I want to go over why people considered the Vigenere cipher to be
 unbreakable. Basically, it is because all early cryptanalysis (code breaking)
-approaches fundamentally rely on frequency <span class=GramE>analysis, and</span>
-using Vigenere ciphers can very effectively hide symbol frequency signatures.
-Deprived of the only known tool, potential code breakers despaired. </p>
+approaches fundamentally rely on frequency analysis, and using Vigenere ciphers
+can very effectively hide symbol frequency signatures. Deprived of the only
+known tool, potential code breakers despaired. </p>
 
 <p class=MsoNormal>Ciphertexts encoded with a Vigenere cipher are not
 completely devoid of structure, however. While a given plaintext word is always
@@ -7215,20 +7208,19 @@ using frequency analysis.</p>
 at least greatly narrow down the options for) the number of cipher alphabets.
 Once we know the number of cipher alphabets (<span class=CodeChar>N</span>), we
 can assign each location in the ciphertext to one of the <span class=CodeChar>N</span>
-<span class=GramE>cipher</span> alphabets. The key realization is that within
-each cipher alphabet bucket, encipherment is <b>mono</b>alphabetic, which means
-that letter frequencies will no longer be concealed. If the cipher was a
-Vigenere cipher, knowing the plaintext identity of even one ciphertext letter
-is enough to determine the whole ciphertext alphabet (because the cipher
-alphabet is just the plain alphabet shifted some number of places, so once we
-know one mapping, we know the shift, and therefore the whole mapping). So, we
-could just assume that the most common ciphertext letter in each cipher
-alphabet bucket probably represents plaintext letter <span class=PlaintextChar>'e'</span>,
-and we would be able to guess the entire encipherment scheme. If the frequency
-of <span class=PlaintextChar>'e'</span> was hidden using a monoalphabetic
-trick, then it is just going to be a little more work to match things up, but
-we are back to the frequency analysis realm where cryptanalysts were used to
-working. </p>
+cipher alphabets. The key realization is that within each cipher alphabet
+bucket, encipherment is <b>mono</b>alphabetic, which means that letter
+frequencies will no longer be concealed. If the cipher was a Vigenere cipher,
+knowing the plaintext identity of even one ciphertext letter is enough to
+determine the whole ciphertext alphabet (because the cipher alphabet is just
+the plain alphabet shifted some number of places, so once we know one mapping,
+we know the shift, and therefore the whole mapping). So, we could just assume
+that the most common ciphertext letter in each cipher alphabet bucket probably
+represents plaintext letter <span class=PlaintextChar>'e'</span>, and we would
+be able to guess the entire encipherment scheme. If the frequency of <span
+class=PlaintextChar>'e'</span> was hidden using a monoalphabetic trick, then it
+is just going to be a little more work to match things up, but we are back to
+the frequency analysis realm where cryptanalysts were used to working. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>1.6<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -7261,8 +7253,8 @@ through. If this were the case, then it would be helpful to figure out where
 the boundaries were between sections. Then, if we knew what happened at the
 boundaries, and the cycling within boundaries was consistent, then we could
 again align the ciphertext so that we knew which cipher alphabet was used to
-encipher each <span class=GramE>letter, and</span> could then analyze the
-frequency of each symbol within each alphabet. </p>
+encipher each letter, and could then analyze the frequency of each symbol
+within each alphabet. </p>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -7669,17 +7661,16 @@ length by factor analysis, and small gaps would be less likely to contain frame
 shifts. The shortest repeat of at least 3 letters had a gap of 18, the next
 shortest few had gaps of 36, and the next after that had a gap of 54. These are
 all multiples of 18, and together suggest that the number of cipher alphabets
-is most likely 18. <span class=GramE>All of</span> these numbers are also
-multiples of 2, 3, 6, and 9 (the factors of 18), of course, but 2 and 3 are
-unlikely because if there were only that few alphabets, then we would expect to
-see many more repeats. Even with 6 cipher alphabets, I think I would expect to
-see more repeats. 9 alphabets <span class=GramE>seems</span> plausible, but the
-evidence for 18 is a bit stronger, because if there were 9 alphabets we would
-also expect about half of the repeats to be multiples of 9 but not 18 (e.g. 27,
-45, 63), and we don't see any of those. Another consideration is that if we
-were to assume a cycle of length 18 when the actual cycle length was 9, we
-could realize the error <span class=GramE>fairly easily</span> when alphabet 1
-and alphabet 10 turned out to be the same. </p>
+is most likely 18. All of these numbers are also multiples of 2, 3, 6, and 9
+(the factors of 18), of course, but 2 and 3 are unlikely because if there were
+only that few alphabets, then we would expect to see many more repeats. Even
+with 6 cipher alphabets, I think I would expect to see more repeats. 9
+alphabets seems plausible, but the evidence for 18 is a bit stronger, because
+if there were 9 alphabets we would also expect about half of the repeats to be
+multiples of 9 but not 18 (e.g. 27, 45, 63), and we don't see any of those.
+Another consideration is that if we were to assume a cycle of length 18 when
+the actual cycle length was 9, we could realize the error fairly easily when
+alphabet 1 and alphabet 10 turned out to be the same. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>1.7<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -8192,9 +8183,8 @@ difference of 6, and so on, with increases of about 400 in the differences
 corresponding to about +14 modulo 18. This supports our provisional hypothesis.
 The rough regularity indicates that frame shift boundaries might occur
 approximately every 400 enciphered characters, and that what happens at each
-frame shift is jumping forward 14 alphabets in the <span class=GramE>18
-alphabet</span> cycle (which is of course equivalent to jumping backwards 4
-alphabets in the cycle). </p>
+frame shift is jumping forward 14 alphabets in the 18 alphabet cycle (which is
+of course equivalent to jumping backwards 4 alphabets in the cycle). </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>1.8<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -8217,18 +8207,18 @@ and upper bound of 730, which is extremely wide!</p>
 
 <p class=MsoNormal>Another approach would be to look at the longest gap, which
 is 3330 (for <span class=CiphertextChar>'qtx'</span>) and appears to represent
-having crossed 9 frame shift boundaries (to arrive back <span class=GramE>into</span>
-the original frame). This gap must be large enough to contain at least 8 full
-boundary-to-boundary <span class=GramE>frames, and</span> must not be large
-enough to contain 10 full frames. Therefore, the boundary spacing, if uniform,
-must be less than 417 and greater than 333. These are stronger bounds, but
-still leave a lot of wiggle room. </p>
+having crossed 9 frame shift boundaries (to arrive back into the original
+frame). This gap must be large enough to contain at least 8 full
+boundary-to-boundary frames, and must not be large enough to contain 10 full
+frames. Therefore, the boundary spacing, if uniform, must be less than 417 and
+greater than 333. These are stronger bounds, but still leave a lot of wiggle
+room. </p>
 
 <p class=MsoNormal>I remember investigating letter frequencies with the
-boundaries at different locations to see if those ended up being clarifying (<span
-class=GramE>e.g.</span> if having boundaries every 360 characters suddenly
-resolved each of the 18 cipher alphabets into symbol frequencies which looked
-like English), but did not find anything clearly helpful there. </p>
+boundaries at different locations to see if those ended up being clarifying
+(e.g. if having boundaries every 360 characters suddenly resolved each of the
+18 cipher alphabets into symbol frequencies which looked like English), but did
+not find anything clearly helpful there. </p>
 
 <p class=MsoNormal>I also remember starting to try to construct islands of
 known frame by figuring out the frame references between repeated words. For
@@ -8240,24 +8230,23 @@ gap between <span class=CiphertextChar>'ixb'</span> and <span
 class=CiphertextChar>'knr'</span>, then we can determine that <span
 class=CiphertextChar>'knr'</span> starts in alphabet <span class=CodeChar>X+9</span>
 in one place, and in the other. This suggests that either there is a frame
-shift in both places <span class=GramE>or</span> there is a frame shift in
-neither place. It seems more likely to be neither, in which case we assume that
-we have two aligned islands which do not contain frame shifts. Next, we try to
-expand one of the islands by looking for another repeat word which is nearby,
-and tenatively assign its starting alphabet number relative to the starting alpabet
-for <span class=CiphertextChar>'ixb'</span>, assuming there is no frame
-boundary between the island and the new word. Then we look at the other repeats
-for that word and try to connect that frame to another close by word. By
-expanding the network of connections, we eventually find another repeated pair
-where we have assigned an alphabet number by two different paths through the
-network. If the assigned alphabet number is the same, then we guess that <span
-class=GramE>all of</span> our assumptions of no boundary in the small gaps
-along that network of connections were correct. If they disagree about which
-alphabet number the word should have, then we probably crossed a frame boundary
-one of those times we assumed we didn't, and we <span class=GramE>have to</span>
-regard the assembled network as suspect, unfortunately without great ability to
-pinpoint where the problem is. This type of analysis was difficult to keep
-track of and very slow. </p>
+shift in both places or there is a frame shift in neither place. It seems more
+likely to be neither, in which case we assume that we have two aligned islands
+which do not contain frame shifts. Next, we try to expand one of the islands by
+looking for another repeat word which is nearby, and tenatively assign its
+starting alphabet number relative to the starting alpabet for <span
+class=CiphertextChar>'ixb'</span>, assuming there is no frame boundary between
+the island and the new word. Then we look at the other repeats for that word
+and try to connect that frame to another close by word. By expanding the
+network of connections, we eventually find another repeated pair where we have
+assigned an alphabet number by two different paths through the network. If the
+assigned alphabet number is the same, then we guess that all of our assumptions
+of no boundary in the small gaps along that network of connections were
+correct. If they disagree about which alphabet number the word should have,
+then we probably crossed a frame boundary one of those times we assumed we
+didn't, and we have to regard the assembled network as suspect, unfortunately
+without great ability to pinpoint where the problem is. This type of analysis
+was difficult to keep track of and very slow. </p>
 
 <p class=MsoNormal>One thing I discovered early on was that <span
 class=CiphertextChar>'ixb'</span> and <span class=CiphertextChar>'ixp'</span>
@@ -8275,12 +8264,12 @@ might be complicated by multiple cipher symbols for single plain letters (and
 therefore multiple plain letters represented by a single cipher symbol).
 Furthermore, the presence of frame shifts meant that deciding that on the cycle
 length of 18 was not sufficient to be able to assign all cipher symbols to a
-corresponding cipher alphabet; <span class=GramE>instead</span> there was this
-painstaking and potentially error-prone process of assembling aligned islands.
-Because there was only a relatively small amount of text in these islands, <span
-class=GramE>and also</span> because there appeared to be a non-1-to-1 mapping
-between plain letters and cipher symbols, it was difficult to bring in
-frequency analysis to start filling in good guesses for the cipher alphabets. </p>
+corresponding cipher alphabet; instead there was this painstaking and
+potentially error-prone process of assembling aligned islands. Because there
+was only a relatively small amount of text in these islands, and also because
+there appeared to be a non-1-to-1 mapping between plain letters and cipher symbols,
+it was difficult to bring in frequency analysis to start filling in good
+guesses for the cipher alphabets. </p>
 
 <p class=MsoNormal>I did start building the code to make guesses of cipher
 letter translations to plain letters and started by guessing that most of the
@@ -8288,8 +8277,8 @@ three letter words with repeats represented plain <span class=PlaintextChar>'the
 but this didn't end up getting me very far. Other guesses I used were that the
 capitalization pattern &quot;Xxxxx Xxx X&quot;, which occurs four times in the
 ciphertext, represented &quot;World War I&quot; (just because I couldn't think
-of anything else that would match that), that a <span class=GramE>four digit</span>
-number which appeared to be a year followed by a single letter, was an <span
+of anything else that would match that), that a four digit number which
+appeared to be a year followed by a single letter, was an <span
 class=PlaintextChar>'s'</span>. I guessed that <span class=CiphertextChar>&quot;ixb
 1870e jfu 1880c ld kq qtx gfzyi '90h&quot;</span> might be <span
 class=PlaintextChar>&quot;the 1870s and 1880s __ to the early '90s&quot;</span>,
@@ -8300,13 +8289,13 @@ class=PlaintextChar>'in'</span> or <span class=PlaintextChar>'on'</span>. </p>
 ciphertext to rows of 18 letters and tried to see if I could see any evidence
 of when a changeover happened. I tried looking at how the histogram of
 ciphertext letter frequency changed in a moving window subset of the text in
-each cipher alphabet. <span class=GramE>Both of these</span> approaches seemed
-uninformative. It is too much to expect to see clear patterns based on such a
-small subset of letters. Even if we assumed that the first ~375 letters of the
-text were in the first frame before the first boundary, that means we only have
-a sample of 20 to 21 plaintext letters (375/18) in each of the 18 cipher
-alphabets, which means we expect to see only to 3 <span class=PlaintextChar>'e'</span>s,
-1 to 2 <span class=PlaintextChar>'t'</span>s and <span class=PlaintextChar>'a'</span><span
+each cipher alphabet. Both of these approaches seemed uninformative. It is too
+much to expect to see clear patterns based on such a small subset of letters.
+Even if we assumed that the first ~375 letters of the text were in the first
+frame before the first boundary, that means we only have a sample of 20 to 21
+plaintext letters (375/18) in each of the 18 cipher alphabets, which means we
+expect to see only to 3 <span class=PlaintextChar>'e'</span>s, 1 to 2 <span
+class=PlaintextChar>'t'</span>s and <span class=PlaintextChar>'a'</span><span
 class=PlaintextChar><span style='font-family:Montserrat;font-style:normal'>s</span></span>,
 and 0 to 1 of everything else. With statistical noise, seeing or not seeing a
 letter in a sample of 20 letters just doesn't tell you very much. </p>
@@ -8372,19 +8361,18 @@ class=PlaintextChar>'e'</span>s, and one row (cipher alphabet 17) has three
 plain <span class=PlaintextChar>'e'</span>s. Also, multiple rows have two plain
 <span class=PlaintextChar>'t'</span>s, and a few have two plain <span
 class=PlaintextChar>'h'</span>s. Two or three <span class=PlaintextChar>'e'</span>s
-and two <span class=PlaintextChar>'t'</span>s are unfortunate, but perhaps <span
-class=GramE>fairly unsurprising</span>, but I was very surprised to see
-instances of two <span class=PlaintextChar>'h'</span>s. <span
-class=PlaintextChar>'h'</span> is a letter whose frequency is already sort of
-middle-of-the-pack, and it's not clear that much would be gained by halving it.
-Furthermore, if one is doubling the 7<sup>th</sup> or 8<sup>th</sup> most
-frequent letter (and giving <span class=PlaintextChar>'e'</span> three
-representations), that suggests that there might be 17 letters in use to
-represent the 8 most frequent letters, leaving only 9 remaining letters to
-represent the other 18. That seems like a mess to decipher even if you knew the
-scheme. Furthermore, the multiple representations <span class=GramE>makes</span>
-it harder to figure out the consensus cipher alphabet, because, if we see an <span
-class=PlaintextChar>'a'</span> three letters after an <span
+and two <span class=PlaintextChar>'t'</span>s are unfortunate, but perhaps
+fairly unsurprising, but I was very surprised to see instances of two <span
+class=PlaintextChar>'h'</span>s. <span class=PlaintextChar>'h'</span> is a
+letter whose frequency is already sort of middle-of-the-pack, and it's not
+clear that much would be gained by halving it. Furthermore, if one is doubling
+the 7<sup>th</sup> or 8<sup>th</sup> most frequent letter (and giving <span
+class=PlaintextChar>'e'</span> three representations), that suggests that there
+might be 17 letters in use to represent the 8 most frequent letters, leaving only
+9 remaining letters to represent the other 18. That seems like a mess to
+decipher even if you knew the scheme. Furthermore, the multiple representations
+makes it harder to figure out the consensus cipher alphabet, because, if we see
+an <span class=PlaintextChar>'a'</span> three letters after an <span
 class=PlaintextChar>'e'</span> in the substitution matrix, which <span
 class=PlaintextChar>'e'</span> is that? And which <span class=PlaintextChar>'a'</span>?
 Also, while some rows suggest that each one cipher alphabet is a shifted
@@ -8398,18 +8386,17 @@ original encipherer, or something else I hadn't thought of. </p>
 
 <p class=MsoNormal>This is about as far as I made it on my first try. I did try
 to construct a consensus cipher alphabet and then rotate it across the 18
-alphabets, but this definitely caused <span class=GramE>mis-translations</span>
-in places and generally did not seem to be correct. I believe I had worked on
-this off and on for about a month (perhaps a total of 30 hours or so<span
-class=GramE>), and</span> reported back to my dad at Thanksgiving. I reported
-that I believed that the code appeared to be a polyalphabetic cipher with 18
-cipher alphabets, plus a set of frame shifts at certain points in the text,
-which I had not been able to pin down with any precision. I said that I
-believed that someone with more time and more experience would be able to crack
-it without too much trouble. I couldn't be sure because I had not succeeded,
-but it seemed like I had found enough structure that it would be possible to
-unravel the rest, especially if I had better software tools, given more time
-working on it. </p>
+alphabets, but this definitely caused mis-translations in places and generally
+did not seem to be correct. I believe I had worked on this off and on for about
+a month (perhaps a total of 30 hours or so), and reported back to my dad at
+Thanksgiving. I reported that I believed that the code appeared to be a
+polyalphabetic cipher with 18 cipher alphabets, plus a set of frame shifts at
+certain points in the text, which I had not been able to pin down with any
+precision. I said that I believed that someone with more time and more
+experience would be able to crack it without too much trouble. I couldn't be
+sure because I had not succeeded, but it seemed like I had found enough
+structure that it would be possible to unravel the rest, especially if I had
+better software tools, given more time working on it. </p>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -8477,17 +8464,17 @@ replaced by their lowercase versions. Then, word start boundaries can be
 identified by an underscore followed by a non-underscore, and word end
 boundaries can be identified by a non-underscore followed by an underscore.
 Once the text is parsed into a list of words, we can find which ones are
-unique, and then cycle over each one to find <span class=GramE>all of</span>
-its locations. This analysis found that there were 57 repeated words, 11 of
-which were repeated three times, the rest twice. This is far more than I
-analyzed in the first try. I chose to start with words because the chance that
-a repeated sequence of characters which is a word is a true repeat rather than
-a statistical coincidence is much greater, so I feel more comfortable assuming
-that even two-character words are more likely real repeats. I would feel much
-less confident about two-character sequences in the NSNP representation, as I
-would expect that some would show up just by chance, and I wouldn't want to use
-those in the repeat analysis. Even one character word repeats seem to me to
-have a pretty good chance of being true repeats. </p>
+unique, and then cycle over each one to find all of its locations. This
+analysis found that there were 57 repeated words, 11 of which were repeated
+three times, the rest twice. This is far more than I analyzed in the first try.
+I chose to start with words because the chance that a repeated sequence of
+characters which is a word is a true repeat rather than a statistical
+coincidence is much greater, so I feel more comfortable assuming that even
+two-character words are more likely real repeats. I would feel much less
+confident about two-character sequences in the NSNP representation, as I would
+expect that some would show up just by chance, and I wouldn't want to use those
+in the repeat analysis. Even one character word repeats seem to me to have a
+pretty good chance of being true repeats. </p>
 
 <p class=MsoNormal align=center style='text-align:center'><b>Table 3</b></p>
 
@@ -8643,9 +8630,9 @@ and 3) that the interval between steps is approximately 375 characters (the
 slope of the line which runs approximately through the centers of the
 plateaus). This is a lot of information to start from! </p>
 
-<p class=MsoNormal>Next, we can <span class=GramE>take a look</span> at the
-repeated ciphertext word data, ordered by distance between repeats, and
-including the repeat distance mod 18 (Table 4). </p>
+<p class=MsoNormal>Next, we can take a look at the repeated ciphertext word
+data, ordered by distance between repeats, and including the repeat distance
+mod 18 (Table 4). </p>
 
 <p class=MsoNormal align=center style='text-align:center'><b>Table 4</b></p>
 
@@ -11537,14 +11524,14 @@ including the repeat distance mod 18 (Table 4). </p>
 
 <p class=MsoNormal>This includes the data plotted in Figure 6, but at a more
 granular level. Looking at the distance mod 18 column, there is a clear pattern
-for most of the entries. Very short repeat distances (&lt;178 characters) <span
-class=GramE>mod(</span>18) are all 0, then distances between 320 and 410, mod
-18, are all 14, then distances which are between 694 and 820, mod 18 are all
-10, and so on, in a progression of -4 characters for windows of distances all
-the way to the largest distance, which is 3330, which has gotten all the way
-back around to being 0. There are a few anomalies (<span class=CiphertextChar>'wq'</span>,
-<span class=CiphertextChar>'ik'</span>, <span class=CiphertextChar>'oy'</span>,
-<span class=CiphertextChar>'h'</span>, and <span class=CiphertextChar>'c'</span>),
+for most of the entries. Very short repeat distances (&lt;178 characters)
+mod(18) are all 0, then distances between 320 and 410, mod 18, are all 14, then
+distances which are between 694 and 820, mod 18 are all 10, and so on, in a
+progression of -4 characters for windows of distances all the way to the
+largest distance, which is 3330, which has gotten all the way back around to
+being 0. There are a few anomalies (<span class=CiphertextChar>'wq'</span>, <span
+class=CiphertextChar>'ik'</span>, <span class=CiphertextChar>'oy'</span>, <span
+class=CiphertextChar>'h'</span>, and <span class=CiphertextChar>'c'</span>),
 and it does seem a bit strange that the anomalies mostly show up near the
 transitions between shifts, but perhaps these anomalies are not true repeats.
 Note that none are long (three are two letters, and two are only one
@@ -11563,8 +11550,8 @@ of (non-anomalous) repetitions. Figure 7 attempts to show this full set in an
 examinable way, starting with placing expected boundaries every 360 characters
 (because 360 is the 'nicest' spacing (20 full cycles) which seems close to the
 apparent spacing). Most, but not all, of these bars cross the expected number
-of shift boundaries. More specifically 7 of <span class=GramE>73 word</span>
-repeats do not cross the expected number (enumerated in Table 5).</p>
+of shift boundaries. More specifically 7 of 73 word repeats do not cross the
+expected number (enumerated in Table 5).</p>
 
 <div align=center>
 
@@ -11581,12 +11568,11 @@ repeats do not cross the expected number (enumerated in Table 5).</p>
  <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
   <td width=623 valign=top style='width:467.5pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
-  <p class=FigCaption>Figure 7. Word <span class=GramE>repeat</span> start
-  locations, ordered by start location, and colored by number of cipher
-  alphabet shifts expected between repeats, with 0=red, 1=green, 2=blue,
-  3=cyan, 4=magenta, 5=yellow, 6=black, 7=orange, 8=dark maroon, 9=dark green.
-  There are vertical dotted lines every 360 characters, marking one possible
-  set of boundary locations. </p>
+  <p class=FigCaption>Figure 7. Word repeat start locations, ordered by start
+  location, and colored by number of cipher alphabet shifts expected between
+  repeats, with 0=red, 1=green, 2=blue, 3=cyan, 4=magenta, 5=yellow, 6=black,
+  7=orange, 8=dark maroon, 9=dark green. There are vertical dotted lines every
+  360 characters, marking one possible set of boundary locations. </p>
   </td>
  </tr>
 </table>
@@ -11640,7 +11626,7 @@ repeats do not cross the expected number (enumerated in Table 5).</p>
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>1778 to 2170
-  crosses boundaries <span class=GramE>at</span> 1800 and 2160</p>
+  crosses boundaries at 1800 and 2160</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:2'>
@@ -11785,12 +11771,11 @@ repeats do not cross the expected number (enumerated in Table 5).</p>
 from the number of expected crossings, the number of found crossings is one
 greater than the number expected. This suggests that perhaps the interval
 between boundaries is a bit larger than 360. In many cases there are boundaries
-<span class=GramE>fairly close</span> to the locations of the repetitions on
-one side, the other side, or both, suggesting that small shifts would be
-sufficient to remove one crossing and match the numbers of expected and found
-crossings. However, it is also true that shifting any boundaries by any amount
-might also create new cases where the number of expected and found crossings
-would no longer match. </p>
+fairly close to the locations of the repetitions on one side, the other side,
+or both, suggesting that small shifts would be sufficient to remove one
+crossing and match the numbers of expected and found crossings. However, it is
+also true that shifting any boundaries by any amount might also create new
+cases where the number of expected and found crossings would no longer match. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.3<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -11884,11 +11869,11 @@ itself, it seems like an unlikely coincidence. </p>
 
 <p class=MsoNormal>Since brute force checking of uniform spacing didn't yield a
 clear choice, I decided to play around with manually adjusting boundary
-locations to try to determine where they could <span class=GramE>be, and</span>
-look for the pattern in their placement after that. Figure 9 shows the first
-figure of this type I constructed. The short red bar for repeated word 48 is
-for <span class=CiphertextChar>'dnhq<span class=GramE>'<span style='font-family:
-Montserrat'>, and</span></span></span> is 36 characters long. </p>
+locations to try to determine where they could be, and look for the pattern in
+their placement after that. Figure 9 shows the first figure of this type I
+constructed. The short red bar for repeated word 48 is for <span
+class=CiphertextChar>'dnhq'</span><span class=CiphertextChar><span
+style='font-family:Montserrat'>, and</span></span> is 36 characters long. </p>
 
 <div align=center>
 
@@ -11917,13 +11902,12 @@ Montserrat'>, and</span></span></span> is 36 characters long. </p>
 <p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal>We can see that if that boundary were shifted slighly to the
-left, then it would no longer conflict with that repeat, and, <span
-class=GramE>as long as</span> it was not moved across the ends of any other
-bars, it would cause no new conflicts because it would not change how many
-boundaries any other word crosses. In fact, it looks like this approach will
-work for <span class=GramE>all of</span> the problem boundaries: just shift
-them a bit to the left so that they are no longer within the problem bar. The
-details are:</p>
+left, then it would no longer conflict with that repeat, and, as long as it was
+not moved across the ends of any other bars, it would cause no new conflicts
+because it would not change how many boundaries any other word crosses. In
+fact, it looks like this approach will work for all of the problem boundaries:
+just shift them a bit to the left so that they are no longer within the problem
+bar. The details are:</p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -11938,7 +11922,7 @@ Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>The 5<sup>th</sup> boundary (1825) needs to move back to &lt; 1813 and
-&gt; 1778 <span class=GramE>( a</span> shift of -12 to -47)</p>
+&gt; 1778 ( a shift of -12 to -47)</p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -11999,36 +11983,35 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 
 <p class=MsoNormal>Going back to a spacing of 365 with an offset of -36, the
 first <span class=CiphertextChar>'nxy'</span> repeat starts at 1778 and the second
-repeat starts at 2170 (392 apart), while the step boundaries it crosses are <span
-class=GramE>at</span> 1789 and 2154 (by the -4 cycle shift between the repeats,
-there should only be one step boundary between them). This suggests that we
-could solve the problem by moving the 1789 boundary back 12 letters, or by
-moving the 2154 boundary forward by 19 letters (16 to get to the repeat, plus
-three because '<span style='font-family:"Courier New"'>nxy</span>' has three
-letters, and it wouldn't show up as a repeat if the boundary was, for example,
-between the <span class=CiphertextChar>'n'</span> and the <span
-class=CiphertextChar>'x'</span>, because then the <span class=CiphertextChar>'xy'</span>
-in the repeat would have been encoded by different cipher alphabets than the <span
+repeat starts at 2170 (392 apart), while the step boundaries it crosses are at
+1789 and 2154 (by the -4 cycle shift between the repeats, there should only be
+one step boundary between them). This suggests that we could solve the problem
+by moving the 1789 boundary back 12 letters, or by moving the 2154 boundary
+forward by 19 letters (16 to get to the repeat, plus three because '<span
+style='font-family:"Courier New"'>nxy</span>' has three letters, and it
+wouldn't show up as a repeat if the boundary was, for example, between the <span
+class=CiphertextChar>'n'</span> and the <span class=CiphertextChar>'x'</span>,
+because then the <span class=CiphertextChar>'xy'</span> in the repeat would
+have been encoded by different cipher alphabets than the <span
 class=CiphertextChar>'xy'</span> in the first one). However, simply adjusting
 the initial offset to shift all boundaries back 12 more letters (or forward 19
 letters), as already noted, casues more problems than it solves. So, the next
-thing I tried was moving ONLY the boundary <span class=GramE>at</span> 1789 and
-leaving all others in place (where they were at a spacing of 365 with an offset
-of -36). I chose that boundary to try first because the needed shift was
-smaller.</p>
+thing I tried was moving ONLY the boundary at 1789 and leaving all others in
+place (where they were at a spacing of 365 with an offset of -36). I chose that
+boundary to try first because the needed shift was smaller.</p>
 
 <p class=MsoNormal>However, another word repeat starts at 1772, and the <span
 class=CiphertextChar>'nxy'</span> repeat starts at 1778, so to be consistent
 with both words, the fifth boundary needed to be between 1772 and 1778. I chose
 1776 to try. This came back clean. However, I did notice that the eighth
 boundary was too close to it's repeat (i.e., the boundary was in the repeat
-word), so I shifted <span class=GramE>that one two letters</span> forward to
-2886. This leaves no problems in the word repeats, though the boundary
-locations themselves are of course somewhat suspect. Still, even if we
-considered that we might be off by 20 characters in either direction on every
-boundary, we would have correctly assigned cipher alphabets to 90% of the text <span
-class=GramE>( (</span>365-2*20)/365 = ~90%), which is far better than I had
-done in my first attempts by trying to manually build aligned islands of text. </p>
+word), so I shifted that one two letters forward to 2886. This leaves no
+problems in the word repeats, though the boundary locations themselves are of
+course somewhat suspect. Still, even if we considered that we might be off by
+20 characters in either direction on every boundary, we would have correctly
+assigned cipher alphabets to 90% of the text ( (365-2*20)/365 = ~90%), which is
+far better than I had done in my first attempts by trying to manually build
+aligned islands of text. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.7<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -12040,16 +12023,15 @@ characters near boundaries due to uncertainty) of the ciphertext letters, I
 spent some time putting together the software machinery to automatically
 produce an &quot;oriented&quot; version of the ciphertext (referred to as the
 ORI representation). In this representation, the ciphertext is arranged into an
-array of characters with 18 columns and however many rows are <span
-class=GramE>were</span> necessary to hold all the text. Each column holds all
-the ciphertext letters which are enciphered using the same one of the 18 cipher
-alphabets. Step boundaries can be represented by insertions of four spacer
-characters (shifting forward four alphabets is the same as shifting backwards
-14 alphabets in the cycle). I constructed arrays linking the index of
-characters in the NSNP representation to the &quot;oriented&quot;
-representation, and from the &quot;oriented&quot; representation back to the
-original text representation. This was something that I was able to do this
-time <span class=GramE>fairly easily</span>, but which I had found too
+array of characters with 18 columns and however many rows are were necessary to
+hold all the text. Each column holds all the ciphertext letters which are
+enciphered using the same one of the 18 cipher alphabets. Step boundaries can
+be represented by insertions of four spacer characters (shifting forward four
+alphabets is the same as shifting backwards 14 alphabets in the cycle). I
+constructed arrays linking the index of characters in the NSNP representation
+to the &quot;oriented&quot; representation, and from the &quot;oriented&quot;
+representation back to the original text representation. This was something
+that I was able to do this time fairly easily, but which I had found too
 difficult to construct in the first code cracking attempt in Rochester. </p>
 
 <p class=MsoNormal>Once I got the index relationships sorted out, one of the
@@ -12095,12 +12077,12 @@ trips were succesful. </p>
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Repeated character sequences</p>
 
-<p class=MsoNormal>Next, I decided to <span class=GramE>take a look</span> at
-repeated ciphertext character sequences (not just words) to see whether they
-might help confirm or refine boundary locations. Looking at character sequences
-discarding spaces and word boundaries might capture some repetitions which
-occur within words (like catching the repeated <span class=PlaintextChar>'the'</span>
-in both <span class=PlaintextChar>'the'</span> and <span class=PlaintextChar>'there'</span>)
+<p class=MsoNormal>Next, I decided to take a look at repeated ciphertext
+character sequences (not just words) to see whether they might help confirm or
+refine boundary locations. Looking at character sequences discarding spaces and
+word boundaries might capture some repetitions which occur within words (like
+catching the repeated <span class=PlaintextChar>'the'</span> in both <span
+class=PlaintextChar>'the'</span> and <span class=PlaintextChar>'there'</span>)
 or across word boundaries (like catching <span class=PlaintextChar>'-ing th-' </span><span
 class=PlaintextChar><span style='font-family:Montserrat;font-style:normal'>in</span></span>
 <span class=PlaintextChar>'do<u>ing th</u>at'</span> and <span
@@ -12377,28 +12359,27 @@ remaining: </p>
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span><span class=CiphertextChar>'plvk'</span> looks like it should cross 5
-but only crosses 4 of the current <span class=GramE>boundaries, and</span> is
-very close on the starting end (670 vs boundary at 694), but that's the wrong
-direction: if we nudged the boundary below 670, then it would only cross 3, not
-5, and the other boundary is not close. </p>
+but only crosses 4 of the current boundaries, and is very close on the starting
+end (670 vs boundary at 694), but that's the wrong direction: if we nudged the
+boundary below 670, then it would only cross 3, not 5, and the other boundary
+is not close. </p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span><span class=CiphertextChar>'etwa'</span> currently crosses <span
-class=GramE>two, but</span> looks like it should only cross one boundary by
-spacing. It is quite close to a boundary (674 vs boundary at 694). If that
-boundary was nudged back 20 characters, then agreement could be reached (though
-of course it would need to be checked if other words were thrown off). </p>
+</span><span class=CiphertextChar>'etwa'</span> currently crosses two, but
+looks like it should only cross one boundary by spacing. It is quite close to a
+boundary (674 vs boundary at 694). If that boundary was nudged back 20
+characters, then agreement could be reached (though of course it would need to
+be checked if other words were thrown off). </p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span><span class=CiphertextChar>'uhez'</span> currently crosses 5 but looks
-like it should only cross <span class=GramE>4, and</span> is about 60 letters
-from boundaries at both ends (it is at 1001 and 2569, boundaries currently at
-1059 and 2519). To cross one less, 2519 would need to move to at least 2573; or
-1059 would need to drop to at least 1001. Context for <span
-class=CiphertextChar>'uhez'</span> looks very strong, even though boundary
-shift seems a bit large. </p>
+like it should only cross 4, and is about 60 letters from boundaries at both
+ends (it is at 1001 and 2569, boundaries currently at 1059 and 2519). To cross
+one less, 2519 would need to move to at least 2573; or 1059 would need to drop
+to at least 1001. Context for <span class=CiphertextChar>'uhez'</span> looks
+very strong, even though boundary shift seems a bit large. </p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -12415,21 +12396,20 @@ move, and ends are not close enough for this to seem plausible. </p>
 class=CiphertextChar>'etwa'</span> and <span class=CiphertextChar>'uhez'</span>
 seemed like valid repetitions which could be used to refine existing boundary
 locations; all others were rejected as likely spurious. Moving boundary 2 from
-694 to 674 fixed <span class=CiphertextChar>'etwa'</span> and caused no new <span
-class=GramE>problems, and</span> moving boundary 3 from 1059 to 1001 fixed '<span
+694 to 674 fixed <span class=CiphertextChar>'etwa'</span> and caused no new
+problems, and moving boundary 3 from 1059 to 1001 fixed '<span
 style='font-family:"Courier New"'>uhez'</span> and caused no new problems.</p>
 
 <p class=MsoNormal>Moving those boundaries did, however, disturb the regularity
 of the boundary placement, and I spent more time trying to find a boundary
-spacing scheme which restored <span class=GramE>some kind of regularity</span>
-while not violating any of the existing repeat spacings (i.e., those based on
-words and based on character sequences which had not been rejected as
-spurious). One approach I tried, now that I had a large set of repetitions that
-I had some confidence in, was to identify regions in which I was confident
-should not have boundaries in them, because they had zero-boundary repeats
-within them. Figure 12 shows those regions. The sparseness of those regions
-meant that they <span class=GramE>actually are</span> not very helpful in
-constraining boundary spacings. </p>
+spacing scheme which restored some kind of regularity while not violating any
+of the existing repeat spacings (i.e., those based on words and based on
+character sequences which had not been rejected as spurious). One approach I
+tried, now that I had a large set of repetitions that I had some confidence in,
+was to identify regions in which I was confident should not have boundaries in
+them, because they had zero-boundary repeats within them. Figure 12 shows those
+regions. The sparseness of those regions meant that they actually are not very
+helpful in constraining boundary spacings. </p>
 
 <div align=center>
 
@@ -12721,36 +12701,35 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 </span>Concerns about the effects of misplaced frame shift boundaries</p>
 
 <p class=MsoNormal>I was still a bit unsatisfied at being unable to discern a
-clear rule for boundary <span class=GramE>placement, but</span> decided that it
-was time to just move forward and hope that boundary locations might become clearer
-as I started to decipher parts of the text. That is, if I had a section of
-plaintext which seemed well deciphered but then transitioned to gibberish at a
-current boundary location, that would suggest that that boundary is in the
-wrong place and should be moved until it no longer triggered gibberish.
-However, one of the reasons that I spent so much time trying to pin down the
-boundaries better is that if I filled in plaintext guesses for parts of the
-ciphertext which I had in the wrong boundary frame, these guesses, even if
-correct, would lead to mistranslations in all regions of the ciphertext which
-were in the <i>correct</i> boundary frames. So, I was worried that if I started
-working on translations without getting the boundaries right (or at least close
-to right) I was going to start to get hopelessly confused, moving the wrong
-boundaries to try to fix apparent problems, which would just end up creating
-new problems later as more was filled in. </p>
+clear rule for boundary placement, but decided that it was time to just move
+forward and hope that boundary locations might become clearer as I started to
+decipher parts of the text. That is, if I had a section of plaintext which
+seemed well deciphered but then transitioned to gibberish at a current boundary
+location, that would suggest that that boundary is in the wrong place and should
+be moved until it no longer triggered gibberish. However, one of the reasons
+that I spent so much time trying to pin down the boundaries better is that if I
+filled in plaintext guesses for parts of the ciphertext which I had in the
+wrong boundary frame, these guesses, even if correct, would lead to
+mistranslations in all regions of the ciphertext which were in the <i>correct</i>
+boundary frames. So, I was worried that if I started working on translations
+without getting the boundaries right (or at least close to right) I was going
+to start to get hopelessly confused, moving the wrong boundaries to try to fix
+apparent problems, which would just end up creating new problems later as more
+was filled in. </p>
 
 <p class=MsoNormal>Because of worries about the effects of misplaced boundaries
 and possible erroneous guessed decipherments, I knew I wanted to be able to
 try, and compare between, different approaches. To do this, I needed to be able
-to create multiple versions of the data and various reference frames (<span
-class=GramE>e.g.</span> different ORI representations based on different
-boundary locations). To make this easy, I took the work I had figured out so
-far in terms of going from the original ciphertext to NSNP and ORI
-representations and keeping track of the index relationships between <span
-class=GramE>them, and</span> turned it into a function which generated them
-given only the original ciphertext and the set of boundary locations as inputs.
-That way, it would be no big deal to try out different boundary locations and
-compare side-by-side. In my prior approach, I would go back and edit the code
-and re-run to generate a new representation. So, to compare, I would need to
-edit the code back and forth, a tedious and error-prone process. </p>
+to create multiple versions of the data and various reference frames (e.g.
+different ORI representations based on different boundary locations). To make
+this easy, I took the work I had figured out so far in terms of going from the
+original ciphertext to NSNP and ORI representations and keeping track of the
+index relationships between them, and turned it into a function which generated
+them given only the original ciphertext and the set of boundary locations as
+inputs. That way, it would be no big deal to try out different boundary
+locations and compare side-by-side. In my prior approach, I would go back and
+edit the code and re-run to generate a new representation. So, to compare, I
+would need to edit the code back and forth, a tedious and error-prone process. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.11<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -12763,9 +12742,9 @@ size of the sample for each cipher alphabet is limited to approximately 1/18 of
 the length of the ciphertext, but this still gave ~200 symbols to tally in each
 of the 18 alphabets. Figure 13 shows the symbol frequency histograms for each
 of the cipher alphabets. Compared with the right panel of Figure 1, where all
-ciphertext symbols were <span class=GramE>all of</span> approximately equal
-frequency, it is clear that the histograms of Figure 13 show much more
-meaningful, even English-like, variation. </p>
+ciphertext symbols were all of approximately equal frequency, it is clear that
+the histograms of Figure 13 show much more meaningful, even English-like,
+variation. </p>
 
 <div align=center>
 
@@ -12884,14 +12863,14 @@ or <span class=PlaintextChar>to</span>) <span class=PlaintextChar>the 1870s and
 <span class=PlaintextChar>to the</span> (<span class=PlaintextChar>early</span>
 or <span class=PlaintextChar>later</span>)<span class=PlaintextChar> 90s.&quot;</span>
 In addition, there are a few places with an odd capitalization pattern of three
-words in a row: a <span class=GramE>five letter</span> word, a three letter
-word, and a one letter word. Here are the examples: <span class=CiphertextChar>'Nacbo
-Ipj R'</span>, <span class=CiphertextChar>'Wjxkx Rys A'</span>, and <span
-class=CiphertextChar>'Jwkxk Elf N'</span>. I guessed that this might be <span
-class=PlaintextChar>&quot;World War I&quot;</span>, which is later but also
-reasonably consistent with the numerical dates which appear (~1870-1890s). Here
-is the first set of substitutions based on these interpretations (plus a couple
-of <span class=PlaintextChar>'the'</span> guesses):</p>
+words in a row: a five letter word, a three letter word, and a one letter word.
+Here are the examples: <span class=CiphertextChar>'Nacbo Ipj R'</span>, <span
+class=CiphertextChar>'Wjxkx Rys A'</span>, and <span class=CiphertextChar>'Jwkxk
+Elf N'</span>. I guessed that this might be <span class=PlaintextChar>&quot;World
+War I&quot;</span>, which is later but also reasonably consistent with the
+numerical dates which appear (~1870-1890s). Here is the first set of
+substitutions based on these interpretations (plus a couple of <span
+class=PlaintextChar>'the'</span> guesses):</p>
 
 <p class=MsoNormal align=center style='text-align:center'><b>Table 8</b></p>
 
@@ -13246,15 +13225,15 @@ and then one cipher alphabet down and three characters later there is an <span
 class=PlaintextChar>'h'</span>, and finally one cipher alphabet down from that
 and four characters later there is an <span class=PlaintextChar>'e'</span>. The
 same pattern repeats in cipher alphabets 12-14, just shifted rightward 6
-characters from where it is in cipher alphabets 10-12. And <span class=GramE>again</span>
-in cipher alphabets 14-16, again shifted rightward 6 characters from where it
-is in 12-14. This is very <span class=GramE>interesting, and</span> suggests
-that perhaps all of the cipher alphabets are just shifted versions of each
-other in some sort of regular progression. If true, this is a big breakthrough
-because we can use information learned in one alphabet to help fill in all the
-others. I set about trying to construct a consensus cipher alphabet by looking
-at relationships between letters in each of the cipher alphabets. For example,
-we see <span class=PlaintextChar>'wh'</span> in cipher alphabet 3, and <span
+characters from where it is in cipher alphabets 10-12. And again in cipher
+alphabets 14-16, again shifted rightward 6 characters from where it is in
+12-14. This is very interesting, and suggests that perhaps all of the cipher
+alphabets are just shifted versions of each other in some sort of regular
+progression. If true, this is a big breakthrough because we can use information
+learned in one alphabet to help fill in all the others. I set about trying to
+construct a consensus cipher alphabet by looking at relationships between
+letters in each of the cipher alphabets. For example, we see <span
+class=PlaintextChar>'wh'</span> in cipher alphabet 3, and <span
 class=PlaintextChar>'lw_s'</span> in cipher alphabet 5. If we put these
 together, we would guess that the consensus cipher alphabet has a section which
 is <span class=PlaintextChar>'lwhs'</span>. Following this assembly process
@@ -13264,9 +13243,9 @@ there were two <span class=PlaintextChar>'e'</span>s in the cipher alphabet
 (see alphabet 4), I had to be careful about using <span class=PlaintextChar>'e'</span>s
 as location references. </p>
 
-<p class=MsoNormal>Before we go further with the consensus alphabet, let's <span
-class=GramE>take a look</span> at what simply applying this substitution matrix
-gives us across the whole text (see Figure 15). </p>
+<p class=MsoNormal>Before we go further with the consensus alphabet, let's take
+a look at what simply applying this substitution matrix gives us across the
+whole text (see Figure 15). </p>
 
 <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0in 0in 0in 0in'>
@@ -13386,9 +13365,9 @@ try applying the consensus alphabet everywhere and see how it came out. </p>
   of pound signs (<span class=CiphertextChar>#</span>). Within the pound sign
   pair, the number of the boundary is given, followed by the NSNP index
   associated with that location in parentheses. For example, <span
-  class=CiphertextChar>#7(<span class=GramE>2574)#</span></span> indicates that
-  the 7<sup>th</sup> boundary location is at that point in the text, which also
-  corresponds with the NSNP index 2574. </p>
+  class=CiphertextChar>#7(2574)#</span> indicates that the 7<sup>th</sup>
+  boundary location is at that point in the text, which also corresponds with
+  the NSNP index 2574. </p>
   </td>
  </tr>
 </table>
@@ -13409,16 +13388,15 @@ paragraph. This kind of order from chaos suggested that <i>something</i> was
 right about what I was doing. There were also things that looked near misses,
 such as <span class=PlaintextChar>&quot;/thete/ate/&quot;</span>, which looks
 like it would correctly be translated as <span class=PlaintextChar>&quot;/there/are/&quot;</span>,
-but that the two <span class=GramE>plaintext</span> <span class=PlaintextChar>'r'</span>s
-had been mistranslated into <span class=PlaintextChar>'t'</span>s instead. Or
-&quot;<span class=PlaintextChar>Thoweh&quot;</span> (first word in second to
-last paragraph), which looks like it should be <span class=PlaintextChar>&quot;Though&quot;</span>,
+but that the two plaintext <span class=PlaintextChar>'r'</span>s had been
+mistranslated into <span class=PlaintextChar>'t'</span>s instead. Or &quot;<span
+class=PlaintextChar>Thoweh&quot;</span> (first word in second to last
+paragraph), which looks like it should be <span class=PlaintextChar>&quot;Though&quot;</span>,
 but the location which should be <span class=PlaintextChar>'u'</span> had been
 mistranslated to <span class=PlaintextChar>'w'</span> instead. Finally, there
-were also examples which were fully filled in, but did not appear to to be <span
-class=GramE>similar to</span> real words at all, like <span
-class=PlaintextChar>&quot;/sninir/&quot;</span> (in the first line of the sixth
-paragraph). </p>
+were also examples which were fully filled in, but did not appear to to be
+similar to real words at all, like <span class=PlaintextChar>&quot;/sninir/&quot;</span>
+(in the first line of the sixth paragraph). </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.17<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -13427,31 +13405,30 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 <p class=MsoNormal>I'm not entirely clear on how I proceeded next. I believe I may
 have decided that the translated text based on the consensus alphabets was just
 too garbled to try to keep building from, or I may have used it to get ideas
-for translations where it seemed to have sensible words. Either way, I <span
-class=GramE>definitely started</span> to try to expand on the list of
-translations I had. This was difficult going at first, and I <span class=GramE>definitely
-ran</span> into conflicts between translations. For example, a translation of a
-ciphertext <span class=CiphertextChar>'d'</span> in cipher alphabet 4 in one
-place might appear to correspond to a plaintext <span class=PlaintextChar>'r'</span>,
-and in another place correspond to a plaintext <span class=PlaintextChar>'t'</span>.
-As <span class=GramE>noted</span> before, these can't be simultaneously stored
-in a single substitution matrix, so whichever is chosen to be applied to the
-matrix last would lead to a mistranslation in the other place. Gradually, I
-built up the list of translations I was working from. Once I had a decent list
-of translated words or phrases, I <span class=GramE>definitely discarded</span>
-the consensus alphabet (if I hadn't earlier), as I felt that it was better to
-build on translations that I thought were correct rather than onto a
-theoretical construct which I knew led to garbled translations. </p>
+for translations where it seemed to have sensible words. Either way, I
+definitely started to try to expand on the list of translations I had. This was
+difficult going at first, and I definitely ran into conflicts between
+translations. For example, a translation of a ciphertext <span
+class=CiphertextChar>'d'</span> in cipher alphabet 4 in one place might appear
+to correspond to a plaintext <span class=PlaintextChar>'r'</span>, and in
+another place correspond to a plaintext <span class=PlaintextChar>'t'</span>.
+As noted before, these can't be simultaneously stored in a single substitution
+matrix, so whichever is chosen to be applied to the matrix last would lead to a
+mistranslation in the other place. Gradually, I built up the list of
+translations I was working from. Once I had a decent list of translated words
+or phrases, I definitely discarded the consensus alphabet (if I hadn't
+earlier), as I felt that it was better to build on translations that I thought
+were correct rather than onto a theoretical construct which I knew led to
+garbled translations. </p>
 
 <p class=MsoNormal>As I worked on this, I had developed the side-by-side view
-of the original <span class=GramE>ciphertext</span> and the translated
-plaintext as shown in Figure 17. I added notations for the boundary locations
-and transferred the capitalization patterns and line breaks into the translated
-version so that it was easy to identify corresponding text. I had thoughts of
-developing an interactive GUI where I could enter translation text
-interactively and have it update translations elsewhere, but this always seemed
-like too much work compared to the more manual process I was able to use. This
-process was to </p>
+of the original ciphertext and the translated plaintext as shown in Figure 17.
+I added notations for the boundary locations and transferred the capitalization
+patterns and line breaks into the translated version so that it was easy to
+identify corresponding text. I had thoughts of developing an interactive GUI
+where I could enter translation text interactively and have it update
+translations elsewhere, but this always seemed like too much work compared to
+the more manual process I was able to use. This process was to </p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'>1.<span style='font-size:
 7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -13505,10 +13482,10 @@ text derived from the substitution matrix, see where the current substitution
 matrix was causing problems, as well as where things looked correct but had not
 been transferred to the gold standard text yet. This side-by-side-by-side view
 and approach was also very helpful, and with it, I was able to, bit by bit,
-fill in nearly <span class=GramE>all of</span> the gold standard plaintext. I
-did not record the time evolution of the set of translation substitutions or
-the gold standard plaintext, unfortunately, so I don't have partial
-translations and gold standard examples to show in figures. </p>
+fill in nearly all of the gold standard plaintext. I did not record the time
+evolution of the set of translation substitutions or the gold standard
+plaintext, unfortunately, so I don't have partial translations and gold
+standard examples to show in figures. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.19<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -13527,12 +13504,12 @@ took advanatage of it to help guess difficult translations. For example, there
 is an unusual phrase in the fourth paragraph, where my gold standard
 translation looked like <span class=PlaintextChar>&quot;Instead of the
 happy-go-lucky, ___-___ - ___-_____ - and no tomorrow attitude&quot;</span>,
-the substitution <span class=GramE>matrix based</span> translation of the
-underscores was <span class=PlaintextChar>&quot;big-naw - bie-druli&quot;</span>.
-This seems tricky to make sense of. However, knowing that the true letters were
-likely the given ones or +2 or -2 letters from the given ones, for tricky cases
-like this I could write out the options for each letter and then choose the
-combinations which made reasonable words. In this case, I came up with <span
+the substitution matrix based translation of the underscores was <span
+class=PlaintextChar>&quot;big-naw - bie-druli&quot;</span>. This seems tricky
+to make sense of. However, knowing that the true letters were likely the given
+ones or +2 or -2 letters from the given ones, for tricky cases like this I
+could write out the options for each letter and then choose the combinations
+which made reasonable words. In this case, I came up with <span
 class=PlaintextChar>&quot;big-pay – big-drunk&quot;</span> as the only somewhat
 sensible option. Figure 18 has another example</p>
 
@@ -13576,16 +13553,16 @@ sensible option. Figure 18 has another example</p>
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
 </span>Finding the source</p>
 
-<p class=MsoNormal>Following these approaches, I was able to decipher nearly <span
-class=GramE>all of</span> the plaintext. The text appeared to be the
-introduction to an oral history of logging culture in Michigan. I was able to
-figure out some of the sticking points and unfamiliar terms by searching about
-on the internet for information about Michigan logging history. For example, this
-helped me identify &quot;cross-cut saws&quot;, &quot;logging tongs&quot;,
-&quot;gang saws&quot;, &quot;river hogs&quot;, and &quot;Benzie County&quot;.
-Eventually I was able to identify the likely source of the plaintext, &quot;A
-history of logging in Benzie County, Michigan&quot; by William Roy Overlease
-and Edith Overlease. This book is out of print but is listed on Amazon (<a
+<p class=MsoNormal>Following these approaches, I was able to decipher nearly
+all of the plaintext. The text appeared to be the introduction to an oral
+history of logging culture in Michigan. I was able to figure out some of the
+sticking points and unfamiliar terms by searching about on the internet for
+information about Michigan logging history. For example, this helped me
+identify &quot;cross-cut saws&quot;, &quot;logging tongs&quot;, &quot;gang
+saws&quot;, &quot;river hogs&quot;, and &quot;Benzie County&quot;. Eventually I
+was able to identify the likely source of the plaintext, &quot;A history of
+logging in Benzie County, Michigan&quot; by William Roy Overlease and Edith
+Overlease. This book is out of print but is listed on Amazon (<a
 href="https://www.amazon.com/history-logging-Benzie-County-Michigan/dp/B0007AGOGW">https://www.amazon.com/history-logging-Benzie-County-Michigan/dp/B0007AGOGW</a>).
 The authors appear to have donated their source material to Michigan State
 University (<a href="https://archive.lib.msu.edu/uahc/FindingAids/100.html">https://archive.lib.msu.edu/uahc/FindingAids/100.html</a>),
@@ -13631,9 +13608,9 @@ your chance to read the text in its entirety!).</p>
   <td width=638 valign=top style='width:6.65in;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
   <p class=FigCaption>Figure 19. After gold standard text was completely
-  determined (right panel), the substitution <span class=GramE>matrix based</span>
-  translation (middle panel) still had many, many mistranslations, suggesting
-  that something was missing in the simple substitution matrix approach. </p>
+  determined (right panel), the substitution matrix based translation (middle
+  panel) still had many, many mistranslations, suggesting that something was
+  missing in the simple substitution matrix approach. </p>
   </td>
  </tr>
 </table>
@@ -13733,23 +13710,22 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 <p class=MsoNormal style='margin-bottom:0in;line-height:normal;text-autospace:
 none'>However, I could not shake the idea that somehow something might be not
 quite right about boundary positions, or that there was something else odd
-going on. I felt like boundary locations, as I conceived them, ought to be <span
-class=GramE>fairly obvious</span>, especially now that I had the full plain
-text. For example, if I had misplaced the first boundary, there should be no
-contradictions when building the substitution matrix from the gold plaintext
-and the ciphertext until either 1) the first boundary was hit too early,
-whereupon every character after that up until the correct boundary location
-should conflict with the correct substitution matrix, and then, once the
-correct boundary location was reached, there should again be no conflicts with
-the correct substitution matrix, or 2) the first boundary was placed too late,
-whereupon every character from the correct boundary location up until the
-too-late boundary placement should cause conflicts, but before and after this
-region, there should be no conflicts with the correct substitution matrix.
-Either way, it should be easy to see where the conflicts start and stop and
-move the boundary until these conflicts are eliminated. However, this didn't
-seem to be how things were working out. Conflicts seemed scattered about the
-text rather than focused <span class=GramE>in</span> contiguous regions as I
-would have expected. </p>
+going on. I felt like boundary locations, as I conceived them, ought to be
+fairly obvious, especially now that I had the full plain text. For example, if
+I had misplaced the first boundary, there should be no contradictions when
+building the substitution matrix from the gold plaintext and the ciphertext
+until either 1) the first boundary was hit too early, whereupon every character
+after that up until the correct boundary location should conflict with the
+correct substitution matrix, and then, once the correct boundary location was
+reached, there should again be no conflicts with the correct substitution
+matrix, or 2) the first boundary was placed too late, whereupon every character
+from the correct boundary location up until the too-late boundary placement
+should cause conflicts, but before and after this region, there should be no
+conflicts with the correct substitution matrix. Either way, it should be easy
+to see where the conflicts start and stop and move the boundary until these
+conflicts are eliminated. However, this didn't seem to be how things were
+working out. Conflicts seemed scattered about the text rather than focused in
+contiguous regions as I would have expected. </p>
 
 <p class=MsoNormal style='margin-bottom:0in;line-height:normal;text-autospace:
 none'>&nbsp;</p>
@@ -13796,8 +13772,8 @@ decipherment) both alphabet 12 and 16 would be equally consistent with the gold
 standard plaintext. Amazingly, things continued in this way throughout the
 whole word; no matter which side of <span class=PlaintextChar>'experience'</span>
 the frame shift boundary was on, the plaintext <span class=PlaintextChar>'experience'</span>
-was interpretable from the ciphertext decipherment <span class=GramE>as long as</span>
-+2 and -2 letter shifts were allowed. </p>
+was interpretable from the ciphertext decipherment as long as +2 and -2 letter
+shifts were allowed. </p>
 
 <p class=MsoNormal>On one hand, this was an exciting discovery: there seemed to
 be some sort of pattern in the cipher alphabets which meant that alphabets four
@@ -13807,8 +13783,8 @@ conversely, what kind of construction process for cipher alphabets would lead
 to this effect. In any case, this did seem like it might explain why boundary
 shifts were so much harder to pin down that I imagined; shifting by four cipher
 alphabets had a far subtler effect than I thought. Instead of producing
-gibberish if misplaced, it instead produced <span class=GramE>more or less
-intelligible</span> changes, hiding the transition. </p>
+gibberish if misplaced, it instead produced more or less intelligible changes,
+hiding the transition. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.24<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -13816,26 +13792,25 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 
 <p class=MsoNormal>I was also quite intrigued by this phenomenon where
 deciphered letters were often +2 or -2 letters from what I believe the true
-plaintext letter was. I tried to think about what kind of scheme could lead to <span
-class=GramE>this, and</span> considered that perhaps a first encipherment step
-was to sometimes add or subtract two letter places to the plaintext letter, and
-then run that possibly altered letter through a cipher alphabet encipherment.
-Perhaps there were some rules or pattern to determine when you added, subtracted,
-or left unchanged. As a first attempt at investigating this, I decided to
-consider the first plaintext translation as the &quot;base&quot; one and look
-for any patterns in the shifts away from this base. That is, if the first
-occurrence of cipher <span class=CiphertextChar>'b'</span> in cipher alphabet 1
-corresponds to a plain <span class=PlaintextChar>'f'</span> in the gold
-standard plaintext, and the second occurrence of cipher <span
-class=CiphertextChar>'b'</span> in cipher alphabet 1 corresponds to a plain <span
-class=PlaintextChar>'h'</span> in the gold standard plaintext, then cipher <span
-class=CiphertextChar>'b'</span> in cipher alphabet would get marked with a
-&quot;+2&quot; because the second occurrence translation was shifted by +2
-letters (from <span class=PlaintextChar>'f' </span>to <span
-class=PlaintextChar>'h'</span>). Doing this for the whole substitution matrix,
-we can see the results shown in Figure 21, where the shifts have been
-translated into one-character symbols so that they will fit into a nice regular
-character array for visual inspection. </p>
+plaintext letter was. I tried to think about what kind of scheme could lead to
+this, and considered that perhaps a first encipherment step was to sometimes
+add or subtract two letter places to the plaintext letter, and then run that
+possibly altered letter through a cipher alphabet encipherment. Perhaps there
+were some rules or pattern to determine when you added, subtracted, or left
+unchanged. As a first attempt at investigating this, I decided to consider the
+first plaintext translation as the &quot;base&quot; one and look for any
+patterns in the shifts away from this base. That is, if the first occurrence of
+cipher <span class=CiphertextChar>'b'</span> in cipher alphabet 1 corresponds
+to a plain <span class=PlaintextChar>'f'</span> in the gold standard plaintext,
+and the second occurrence of cipher <span class=CiphertextChar>'b'</span> in
+cipher alphabet 1 corresponds to a plain <span class=PlaintextChar>'h'</span>
+in the gold standard plaintext, then cipher <span class=CiphertextChar>'b'</span>
+in cipher alphabet would get marked with a &quot;+2&quot; because the second
+occurrence translation was shifted by +2 letters (from <span
+class=PlaintextChar>'f' </span>to <span class=PlaintextChar>'h'</span>). Doing
+this for the whole substitution matrix, we can see the results shown in Figure
+21, where the shifts have been translated into one-character symbols so that
+they will fit into a nice regular character array for visual inspection. </p>
 
 <div align=center>
 
@@ -13888,14 +13863,13 @@ class=PlaintextChar>'e'</span> as one of its translations for a cipher letter,
 then it often had plain <span class=PlaintextChar>'e'</span> as one of the
 translations for the cipher letter +12 letters away. For example, cipher
 alphabet 1 has plain <span class=PlaintextChar>'e' </span>as a translation for
-cipher <span class=CiphertextChar>'a'</span>, <span class=GramE>and also</span>
-for cipher <span class=CiphertextChar>'m'</span>, and <span
-class=CiphertextChar>'m'</span> is 12 letters after <span class=CiphertextChar>'a'</span>.
-On other layers of the 3D substitution matrix, cipher <span
-class=CiphertextChar>'a'</span> also is translated as plain <span
-class=PlaintextChar>'c'</span> and cipher <span class=CiphertextChar>'m'</span>
-is also translated as plain <span class=PlaintextChar>'g'</span> (see Figure
-22).</p>
+cipher <span class=CiphertextChar>'a'</span>, and also for cipher <span
+class=CiphertextChar>'m'</span>, and <span class=CiphertextChar>'m'</span> is
+12 letters after <span class=CiphertextChar>'a'</span>. On other layers of the
+3D substitution matrix, cipher <span class=CiphertextChar>'a'</span> also is
+translated as plain <span class=PlaintextChar>'c'</span> and cipher <span
+class=CiphertextChar>'m'</span> is also translated as plain <span
+class=PlaintextChar>'g'</span> (see Figure 22).</p>
 
 <div align=center>
 
@@ -14401,13 +14375,13 @@ is also translated as plain <span class=PlaintextChar>'g'</span> (see Figure
 <p class=MsoNormal>For ciphertext <span class=CiphertextChar>'b'</span>, notice
 that one of its translations is plain <span class=PlaintextChar>'p'</span>,
 which also appears 12 letters later as a possible translation for ciphertext <span
-class=CiphertextChar>'n'</span>. And <span class=GramE>again</span> for cipher <span
+class=CiphertextChar>'n'</span>. And again for cipher <span
 class=CiphertextChar>'c'</span>, translation <span class=PlaintextChar>'a'</span>
 also appears 12 letters later for cipher <span class=CiphertextChar>'o'</span>.
-How often does this occur through <span class=GramE>all of</span> the cipher
-alphabets? Very often. See the results in Figure 23, where a '+' means that one
-of the translations for that cipher letter also appears as one of the
-translations for the letter 12 letters later in the same cipher alphabet. </p>
+How often does this occur through all of the cipher alphabets? Very often. See
+the results in Figure 23, where a '+' means that one of the translations for
+that cipher letter also appears as one of the translations for the letter 12
+letters later in the same cipher alphabet. </p>
 
 <div align=center>
 
@@ -14464,8 +14438,8 @@ shifts of 14 letters (see Figure 24)!</p>
 
 <p class=MsoNormal>Lest it appear that this might somehow happen for other
 shifts Figure 25 demonstrates that it never happens for ciphertext letters 13
-or 16 letters <span class=GramE>apart, and</span> happens only rarely for
-ciphertext letters 2 letters apart. </p>
+or 16 letters apart, and happens only rarely for ciphertext letters 2 letters
+apart. </p>
 
 <div align=center>
 
@@ -14534,10 +14508,10 @@ always preserved. That is, if a letter represented by an odd numbered
 ciphertext letter, then it is always represented by an odd-numbered ciphertext
 letter. Likewise for letters represented by even numbered ciphertext letters;
 they must always be represented by even numbered ciphertext letters. I did a
-quick check on whether this was universally true in the 3D substitution <span
-class=GramE>matrix, and</span> identified exactly one place were it seemed not
-to be true, which I determined to be a typo. Once fixed, there were no
-contradictions to this general rule.</p>
+quick check on whether this was universally true in the 3D substitution matrix,
+and identified exactly one place were it seemed not to be true, which I
+determined to be a typo. Once fixed, there were no contradictions to this
+general rule.</p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.27<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -14546,39 +14520,38 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 <p class=MsoNormal>Returning to the 3D substitution matrix (shown in Figure
 20), I had noticed that some cipher alphabets had only two layers (for example,
 cipher alphabet #1, shown in Figure 22 has only two layers), whereas others had
-three layers, though the third layer was typically <span class=GramE>pretty
-sparse</span>. It seemed like it might make more sense if all the cipher
-alphabets <span class=GramE>really only</span> had two layers, and that perhaps
-the third layer was due to misplaced boundary locations. In case it is not
-clear, I was frequently obsessed with establishing the correct boundary
-locations. This is because if I could feel confident that the boundaries were
-in the right places, it would simplify the rest of the analysis, because
-&quot;possibly misplaced boundaries&quot; was a recurring possible explanation
-for any kind of anomaly I was seeing. </p>
+three layers, though the third layer was typically pretty sparse. It seemed
+like it might make more sense if all the cipher alphabets really only had two
+layers, and that perhaps the third layer was due to misplaced boundary
+locations. In case it is not clear, I was frequently obsessed with establishing
+the correct boundary locations. This is because if I could feel confident that
+the boundaries were in the right places, it would simplify the rest of the
+analysis, because &quot;possibly misplaced boundaries&quot; was a recurring
+possible explanation for any kind of anomaly I was seeing. </p>
 
 <p class=MsoNormal>So, taking as my hypothesis that each enciphering alphabet
 (the inverse of the deciphering alphabets that I have been referring to so far
 as &quot;cipher alphabets&quot;) should only have two layers of translations
 for each plaintext letter, I decided to examine where in the text there seemed
-to be requirements for introduction of a third layer. <span class=GramE>In
-order to</span> do that, I examined everywhere that the gold standard plaintext
-indicated there should be a plain <span class=PlaintextChar>'e' </span>and
-found what ciphertext letters were used to represent it in each cipher
-alphabet. I then counted how many times each ciphertext letter was used as the
-translation for <span class=PlaintextChar>'e'</span> and decided that the most
-frequent two within each cipher alphabet should be provisionally considered
-correct, and that any other less frequent ciphertext letters should be
-considered 'oddities'. I had decided to work from the plaintext side instead of
-the ciphertext side because the plaintext doesn't change depending on how you
-assign the ciphertext alphabets, but the the expected ciphertext would. In
-addition, I decided to examine the distribution of 'oddities' in the ORI
-representation (where each column represents one cipher alphabet) because I
-thought this would be the easiest way to see patterns within and across cipher
-alphabets and in relation to boundary placement. Because the ORI representation
-has 215 rows, it's inconvenient to show the full text in figures, but the left
-panel of Figure 26 shows the first ~1/3 of the text with oddity locations
-marked with '<span class=CiphertextChar>#</span>', non-oddity locations marked
-with '<span class=CiphertextChar>o</span>', boundary locations marked with '<span
+to be requirements for introduction of a third layer. In order to do that, I
+examined everywhere that the gold standard plaintext indicated there should be
+a plain <span class=PlaintextChar>'e' </span>and found what ciphertext letters
+were used to represent it in each cipher alphabet. I then counted how many
+times each ciphertext letter was used as the translation for <span
+class=PlaintextChar>'e'</span> and decided that the most frequent two within
+each cipher alphabet should be provisionally considered correct, and that any
+other less frequent ciphertext letters should be considered 'oddities'. I had
+decided to work from the plaintext side instead of the ciphertext side because
+the plaintext doesn't change depending on how you assign the ciphertext
+alphabets, but the the expected ciphertext would. In addition, I decided to
+examine the distribution of 'oddities' in the ORI representation (where each
+column represents one cipher alphabet) because I thought this would be the
+easiest way to see patterns within and across cipher alphabets and in relation
+to boundary placement. Because the ORI representation has 215 rows, it's
+inconvenient to show the full text in figures, but the left panel of Figure 26
+shows the first ~1/3 of the text with oddity locations marked with '<span
+class=CiphertextChar>#</span>', non-oddity locations marked with '<span
+class=CiphertextChar>o</span>', boundary locations marked with '<span
 class=CiphertextChar>||||</span>', and other locations (where there wasn't a
 plaintext <span class=PlaintextChar>'e'</span> with '<span
 class=CiphertextChar>-</span>')</p>
@@ -15313,8 +15286,8 @@ the first layer</p>
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Cipher alphabets which are 4 alphabets apart in the cycle share one set
-of substitutions, and the other set of substitutions is two letters <span
-class=GramE>off of</span> the shared set, in different directions</p>
+of substitutions, and the other set of substitutions is two letters off of the
+shared set, in different directions</p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -15327,10 +15300,10 @@ ciphertext <span class=CiphertextChar>'a'</span>, because the rest of the
 substitutions can be filled in by running through the consensus sequence in
 order from there. For example, cipher alphabet #3 has one substitution layer
 which is the consensus alphabet starting with <span class=PlaintextChar>'m'</span>
-(<span class=GramE>i.e.</span> <span class=PlaintextChar>'mxitepalwhsdozkvgrcnyjufqb'</span>)
-and one subsitution alphabet starting with <span class=PlaintextChar>'o'</span>
-(i.e. <span class=PlaintextChar>'ozkvgrcnyjufqbmxitepalwhsd'</span>), whereas
-cipher alphabet #7 has one layer starting with <span class=PlaintextChar>'m'</span>
+(i.e. <span class=PlaintextChar>'mxitepalwhsdozkvgrcnyjufqb'</span>) and one
+subsitution alphabet starting with <span class=PlaintextChar>'o'</span> (i.e. <span
+class=PlaintextChar>'ozkvgrcnyjufqbmxitepalwhsd'</span>), whereas cipher
+alphabet #7 has one layer starting with <span class=PlaintextChar>'m'</span>
 (the shared alphabet with cipher alphabet #3, i.e. <span class=PlaintextChar>'mxitepalwhsdozkvgrcnyjufqb'</span>)
 and one layer starting with <span class=PlaintextChar>'k'</span> (i.e. <span
 class=PlaintextChar>'kvgrcnyjufqbmxitepalwhsdoz'</span>). Figure 28 has the
@@ -15658,8 +15631,8 @@ the construction of the consensus cipher alphabet: </p>
 <p class=MsoListParagraph style='text-indent:-.25in'>1.<span style='font-size:
 7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Start with any initial plain letter in the first position of the cipher
-alphabet (<span class=GramE>i.e.</span> as a subtitution for cipher <span
-class=CiphertextChar>'a'</span>). </p>
+alphabet (i.e. as a subtitution for cipher <span class=CiphertextChar>'a'</span>).
+</p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'>2.<span style='font-size:
 7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -15705,8 +15678,7 @@ and 2+14=16). </p>
 if we chose <span class=PlaintextChar>'e'</span> to start with. If we chose <span
 class=PlaintextChar>'p'</span> to start with instead, the result of the
 complete process would be <span class=PlaintextChar>'palwhsdozkvgrcnyjufqbmxite'</span>
-(<span class=GramE>i.e.</span> the same sequence, just starting in a different
-place).</p>
+(i.e. the same sequence, just starting in a different place).</p>
 
 <p class=MsoNormal>Shortly after I figured out step 4 above, I checked, and
 realized that a much simpler way to construct the whole consensus alphabet was
@@ -15725,16 +15697,15 @@ class=PlaintextChar>'e'</span> (because 20+11=31, 31 mod 26 = 5, and <span
 class=PlaintextChar>'e'</span> is the 5<sup>th</sup> letter). </p>
 
 <p class=MsoNormal>This method of construction hits every letter of the
-alphabet because 11 and 26 are relatively prime (<span class=GramE>i.e.</span>
-they don't share any factors, as 11 is prime and 26 has only 13 and 2 as
-factors), so letters are not repeated before every letter is visited. A
-construction which used the 13<sup>th</sup> letter after a starting letter
-wouldn't work, because it would loop back to the starting letter right after
-the second letter, and never include any other letters, because 13+13 = 26, and
-26 mod 26 =0, meaning that you end up back where you started. However, this
-thinking suggests that constructing cipher alphabets by adding 3, 5, 7, 9, 17,
-or 23 places in the alphabet would work as well as 11, because these numbers
-are also relatively prime with 26. </p>
+alphabet because 11 and 26 are relatively prime (i.e. they don't share any
+factors, as 11 is prime and 26 has only 13 and 2 as factors), so letters are
+not repeated before every letter is visited. A construction which used the 13<sup>th</sup>
+letter after a starting letter wouldn't work, because it would loop back to the
+starting letter right after the second letter, and never include any other
+letters, because 13+13 = 26, and 26 mod 26 =0, meaning that you end up back
+where you started. However, this thinking suggests that constructing cipher
+alphabets by adding 3, 5, 7, 9, 17, or 23 places in the alphabet would work as
+well as 11, because these numbers are also relatively prime with 26. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.30<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -15755,8 +15726,8 @@ in the cipher alphabet is the letter 11 places later in the regular alphabet,
 can be compactly understood as an affine cipher with multiplier 11. The family
 of 26 cipher alphabets described by shifting versions of the consensus alphabet
 are all the affine ciphers with multiplier 11, and the offsets correspond to
-the choice of the starting letter (<span class=GramE>i.e.</span> an offset of 1
-means the alphabet starting with <span class=PlaintextChar>'a'</span>, 2 means <span
+the choice of the starting letter (i.e. an offset of 1 means the alphabet
+starting with <span class=PlaintextChar>'a'</span>, 2 means <span
 class=PlaintextChar>'b'</span>, etc). </p>
 
 <p class=MsoNormal>The simplicity of this system is an advantage. Recall that
@@ -15767,10 +15738,10 @@ out the encoding or decoding, and such physical aids might tip off adversaries
 that one is a spy, and if caught, might aid them in intercepting and breaking
 coded messages. However, this system of cipher alphabet construction is trivial
 to remember: All one would need to remember to construct a particular version
-of one of these cipher alphabets is the starting letter (<span class=GramE>i.e.</span>
-what cipher <span class=CiphertextChar>'a'</span> should represent, which is
-the same as the offset value in the affine cipher conception), and that you add
-11 to get the next plain letter in the cipher alphabet. </p>
+of one of these cipher alphabets is the starting letter (i.e. what cipher <span
+class=CiphertextChar>'a'</span> should represent, which is the same as the
+offset value in the affine cipher conception), and that you add 11 to get the
+next plain letter in the cipher alphabet. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.31<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -15801,8 +15772,8 @@ realize that I didn't really need to assign cipher alphabet <u>numbers</u> to ea
 location once I had established the consensus alphabet starting letter for that
 location, because it was sufficient to look for patterns in those starting
 letters. Figure 29 shows the full set of starting letters for the whole text,
-arranged into rows with 18 columns because there is clearly a lot of <span
-class=GramE>periodicity</span> of repeats after 18 characters. </p>
+arranged into rows with 18 columns because there is clearly a lot of
+periodicity of repeats after 18 characters. </p>
 
 <div align=center>
 
@@ -15858,12 +15829,12 @@ class=GramE>periodicity</span> of repeats after 18 characters. </p>
   letter, which in this case is <span class=PlaintextChar>'n'</span>, so the
   second deciphered plaintext letter is 'n'. So far, we have deciphered the
   first two letters of <span class=PlaintextChar>'introduction'</span>, but
-  hopefully it is clear that we could continue in the fashion to decipher <span
-  class=GramE>all of</span> the ciphertext letters. Note, however, that the
-  letters in this Figure <span class=GramE>actually come</span> from knowing
-  the plaintext and using that knowledge to determine which cipher alphabet
-  must have been used; it just seemed easier to explain how the correspondance
-  works by showing how this sequence could be used while deciphering. </p>
+  hopefully it is clear that we could continue in the fashion to decipher all
+  of the ciphertext letters. Note, however, that the letters in this Figure
+  actually come from knowing the plaintext and using that knowledge to
+  determine which cipher alphabet must have been used; it just seemed easier to
+  explain how the correspondance works by showing how this sequence could be
+  used while deciphering. </p>
   </td>
  </tr>
 </table>
@@ -15886,15 +15857,15 @@ seem to shift letters backwards by two places (e.g., <span class=PlaintextChar>'
 to <span class=PlaintextChar>'w'</span>, <span class=PlaintextChar>'v'</span>
 to <span class=PlaintextChar>'t'</span>). There are some rows with no
 mutations, and some with two, but most rows have one mutation from the previous
-row. <span class=GramE>Also</span> interesting to observe, sequences which
-mutate away in one region seem to pop up again later in a different place. For
-example, the 7th row starts with <span class=PlaintextChar>'cjov'</span>, and
-over the next several rows, first the <span class=PlaintextChar>'v'</span>
-mutates away to <span class=PlaintextChar>'t'</span>, then the <span
-class=PlaintextChar>'j'</span> mutates away to <span class=PlaintextChar>'h'</span>,
-then the <span class=PlaintextChar>'o'</span> mutates to <span
-class=PlaintextChar>'m'</span>, and lastly the <span class=PlaintextChar>'c'</span>
-mutates to <span class=PlaintextChar>'a'</span>, so that by row 23 the <span
+row. Also interesting to observe, sequences which mutate away in one region
+seem to pop up again later in a different place. For example, the 7th row
+starts with <span class=PlaintextChar>'cjov'</span>, and over the next several
+rows, first the <span class=PlaintextChar>'v'</span> mutates away to <span
+class=PlaintextChar>'t'</span>, then the <span class=PlaintextChar>'j'</span>
+mutates away to <span class=PlaintextChar>'h'</span>, then the <span
+class=PlaintextChar>'o'</span> mutates to <span class=PlaintextChar>'m'</span>,
+and lastly the <span class=PlaintextChar>'c'</span> mutates to <span
+class=PlaintextChar>'a'</span>, so that by row 23 the <span
 class=PlaintextChar>'cjov'</span> in the first four columns is completely gone.
 However, if we look in row 28, <span class=PlaintextChar>'cjov'</span> has
 popped up again in columns 15-18 instead of columns 1-4. Looking down further,
@@ -15928,9 +15899,9 @@ multiples of 18 letters apart plus a shift of some multiple of four columns,
 where the multple goes up with distance. It is true that distance involves
 shifts, but there is no definite &quot;boundary&quot; between those shifts,
 just transitional regions where character sequences mutate away and then mutate
-back into existence in a shifted location. <span class=GramE>This is why</span>
-it was impossible for me to pin down the exact location where boundary shifts
-were occurring; there was no such thing. </p>
+back into existence in a shifted location. This is why it was impossible for me
+to pin down the exact location where boundary shifts were occurring; there was
+no such thing. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.33<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -15945,11 +15916,11 @@ for the original encoder to be focused on the enciphering alphabets, and
 perhaps some patterns (like a mnemonic keyword which sets the initial sequence
 of alphabets or something) might be more visible there. Given a monoalphabetic
 deciphering alphabet, it is trivial to find the enciphering alphabet: one just keeps
-the association between each cipher letter and plain <span class=GramE>letter,
-but</span> sorts them so that the plain letters are in normal alphabet order
-instead of the cipher letters being in normal alphabet order. This inversion is
-shown for the consensus decipherment alphabet (starting at <span
-class=PlaintextChar>'e'</span>) in Figure 30.</p>
+the association between each cipher letter and plain letter, but sorts them so
+that the plain letters are in normal alphabet order instead of the cipher
+letters being in normal alphabet order. This inversion is shown for the
+consensus decipherment alphabet (starting at <span class=PlaintextChar>'e'</span>)
+in Figure 30.</p>
 
 <div align=center>
 
@@ -16497,12 +16468,12 @@ Though, I do note that if we think of +19 as -7 instead, then perhaps there
 could be some conceptual link that 11+7 = 18. My initial thought, though, is
 that there isn't likely to be anything to that coincidence, because there
 doesn't seem to be any actual link between the consensus alphabets, which are
-26-character looping sequences, and the fact that some <span class=GramE>sequence</span>
-of those alphabets are then used in an approximately looping 18 item sequence.
-Instead, I think the fact that we are reordering a highly structured sequence
-means that it is not surprising that the reordered version is also highly
-structured in a similar way, and it just works out that that way is shifts by
-+19 instead of +11. </p>
+26-character looping sequences, and the fact that some sequence of those
+alphabets are then used in an approximately looping 18 item sequence. Instead,
+I think the fact that we are reordering a highly structured sequence means that
+it is not surprising that the reordered version is also highly structured in a
+similar way, and it just works out that that way is shifts by +19 instead of
++11. </p>
 
 <div align=center>
 
@@ -16548,8 +16519,8 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 <p class=MsoNormal>Inspired by the discovery that the sequence of letters in
 the consensus alphabet was a simple arithmetic progression in alphabet place
 locations, I decided to look at the sequence of starting alphabet letters in
-the same way. Converting each starting letter to its place in the alphabet (<span
-class=GramE>i.e.</span> <span class=PlaintextChar>'c'</span> becomes 3, <span
+the same way. Converting each starting letter to its place in the alphabet
+(i.e. <span class=PlaintextChar>'c'</span> becomes 3, <span
 class=PlaintextChar>'m'</span> becomes 13, etc), and then subtracting each
 letter's place from the the one before it yielded that nearly every interval
 was +9, +23, -17, or -3 places. +9 and -17 are equivalent shifts, and +23 and
@@ -16598,16 +16569,16 @@ in each column sometimes have five -3's and sometimes have six -3's. Looking
 linearly forward through the text, a shift of -3 is never followed by another
 -3 shift, instead is always followed by a +9 shift, whereas a +9 shift may be
 followed by either a -3 or another +9, but never more than two +9's in a row
-before switching back to a -3. <span class=GramE>Examining the full set of
-intervals throughout the whole text, there</span> were just two places where
-the interval was not +9 or -3. Upon examining those, one case was a typo where
-I had misspelled the word &quot;expression&quot; in the gold standard plaintext,
-and the other turned out to be a place where I had used the word &quot;in&quot;
-when the correct word was &quot;at&quot;, in the phrase &quot;at the
-sawmill&quot;. Once those were corrected, there were no intervals in the whole
-text which were not either -3 or +9. In terms of overall proportions, +9's
-occurred ~62% of the time, and -3's occurred ~38% of the time. This was close,
-but <span class=GramE>definitely not</span> equal to 2/3 vs 1/3 of the time. </p>
+before switching back to a -3. Examining the full set of intervals throughout
+the whole text, there were just two places where the interval was not +9 or -3.
+Upon examining those, one case was a typo where I had misspelled the word
+&quot;expression&quot; in the gold standard plaintext, and the other turned out
+to be a place where I had used the word &quot;in&quot; when the correct word
+was &quot;at&quot;, in the phrase &quot;at the sawmill&quot;. Once those were
+corrected, there were no intervals in the whole text which were not either -3
+or +9. In terms of overall proportions, +9's occurred ~62% of the time, and
+-3's occurred ~38% of the time. This was close, but definitely not equal to 2/3
+vs 1/3 of the time. </p>
 
 <p class=MsoNormal>I wondered whether the same set sequence of 18 cipher
 alphabets was repeated periodically throughout the text, and with a quick check
@@ -16625,36 +16596,36 @@ one short repeat interval of 18. Note also that the long repeat interval of 374
 is not a multiple of the short repeat interval 18. Instead, it is 4 characters
 shy of 21*18, which means that when one of these sequences does repeat, it
 repeats shifted by 4 characters relative to the 18-character short repeat
-interval. <span class=GramE>This is why</span> all the repeated ciphertext word
-analyses indicated that repeats which were not very short intervals apart were
-shifted by 4 characters if they were about 375 characters apart, shifted by 8
-characters if they were about 750 characters apart, etc, and gave rise to my
-(incorrect) idea that there was an 18-character cycle which was shifted by 4
-characters at periodic boundaries every ~375 characters or so. </p>
+interval. This is why all the repeated ciphertext word analyses indicated that
+repeats which were not very short intervals apart were shifted by 4 characters
+if they were about 375 characters apart, shifted by 8 characters if they were
+about 750 characters apart, etc, and gave rise to my (incorrect) idea that
+there was an 18-character cycle which was shifted by 4 characters at periodic
+boundaries every ~375 characters or so. </p>
 
 <p class=MsoNormal>I decided to investigate where sequences of 18 cipher
-alphabets in a row were immediately repeated (<span class=GramE>i.e.</span> a
-sequence of 18 cipher alphabets were used, and then used again in the same
-order). These happened in <span class=GramE>a number of</span> islands of 13
-locations in a row. For example, the first island started at position 131 and
-continued to position 143. In <span class=GramE>all of</span> these locations,
-the 18 characters starting at that position were immediately repeated, meaning
-that 131 to 148 was the same sequence as 149 to 166, 132 to 149 was the same as
-150 to 167, etc. up to 143 to 160 was the same as 161 to 178 (but 144 to 161
-was not the same as 162 to 179). The sequence of enciphering alphabet starting
-letters for positions 131 to 179 is: '<span style='font-family:"Courier New"'>ajgpyvebktqzwfolud
-ajgpyvebktqzwfolud ajgpyvebktqzi</span>' (where I placed a space after the 18<sup>th</sup>
-and 36<sup>th</sup> character to make it easier to see the repetition). Note
-that the '<span style='font-family:"Courier New"'>i</span>' at the end breaks
-the repetition because the eariler repeats have a '<span style='font-family:
-"Courier New"'>w</span>' following the '<span style='font-family:"Courier New"'>qz</span>'.
-Ignoring for the moment how long these islands were, if I looked at the
-intervals between the starts of these islands, they were 162, 149, 162, 149,
-162, 149, and so on, strictly repeating between those two spacings. 162-149 =
-13, and I had noticed that the usual spacing between mutations seemed to be 13,
-so perhaps these had an alternation regarding how many mutations there were
-before the next repeat (although neither is a multiple of 13, so this doesn't
-seem very cleanly suited to that idea). </p>
+alphabets in a row were immediately repeated (i.e. a sequence of 18 cipher
+alphabets were used, and then used again in the same order). These happened in
+a number of islands of 13 locations in a row. For example, the first island
+started at position 131 and continued to position 143. In all of these
+locations, the 18 characters starting at that position were immediately
+repeated, meaning that 131 to 148 was the same sequence as 149 to 166, 132 to 149
+was the same as 150 to 167, etc. up to 143 to 160 was the same as 161 to 178
+(but 144 to 161 was not the same as 162 to 179). The sequence of enciphering
+alphabet starting letters for positions 131 to 179 is: '<span style='font-family:
+"Courier New"'>ajgpyvebktqzwfolud ajgpyvebktqzwfolud ajgpyvebktqzi</span>'
+(where I placed a space after the 18<sup>th</sup> and 36<sup>th</sup> character
+to make it easier to see the repetition). Note that the '<span
+style='font-family:"Courier New"'>i</span>' at the end breaks the repetition
+because the eariler repeats have a '<span style='font-family:"Courier New"'>w</span>'
+following the '<span style='font-family:"Courier New"'>qz</span>'. Ignoring for
+the moment how long these islands were, if I looked at the intervals between
+the starts of these islands, they were 162, 149, 162, 149, 162, 149, and so on,
+strictly repeating between those two spacings. 162-149 = 13, and I had noticed
+that the usual spacing between mutations seemed to be 13, so perhaps these had
+an alternation regarding how many mutations there were before the next repeat
+(although neither is a multiple of 13, so this doesn't seem very cleanly suited
+to that idea). </p>
 
 <p class=MsoNormal>I wondered if longer sequences were repeated. For example,
 since the first 18 cipher alphabets were repeated starting at position 375,
@@ -16708,54 +16679,53 @@ do with the end of 11 cycles of 11 characters in some way. </p>
 <p class=MsoNormal>Figure 33 shows a difficult-to-interpret image which I tried
 to use to capture something about the patterns I wanted to see in Figure 32.
 There, I wished I could more clearly see the patterns in the runs in the
-columns. It was hard to distinguish <span class=GramE>at a glance</span>
-whether a run of -3's in a column had fiver or six members and whether a run of
-+9's had eight or nine members, as well as whether there might be any hidden
-anomalies where there were longer or shorter runs than these. Figure 33 uses
-color and spatial arrangement to try to capture this information and present it
-in a visually digestible way. It is partially successful at this. One can see
-that there is regularity to where there are runs of -3's of length 5 (blue
-blocks) or 6 (green blocks) and that runs of +9 which are of length 8 (orange
-blocks) are much rarer than runs of length 9 (yellow blocks). Still this
-pattern seems very complex, and the the image is not so easy to use to decipher
-it. I did find it useful in that it reassured me that there <i>was</i> a
-pattern to these variations, even though I decided that it made more sense to
-try to decipher that pattern in other ways than looking at this image. </p>
+columns. It was hard to distinguish at a glance whether a run of -3's in a
+column had fiver or six members and whether a run of +9's had eight or nine
+members, as well as whether there might be any hidden anomalies where there
+were longer or shorter runs than these. Figure 33 uses color and spatial
+arrangement to try to capture this information and present it in a visually
+digestible way. It is partially successful at this. One can see that there is
+regularity to where there are runs of -3's of length 5 (blue blocks) or 6
+(green blocks) and that runs of +9 which are of length 8 (orange blocks) are
+much rarer than runs of length 9 (yellow blocks). Still this pattern seems very
+complex, and the the image is not so easy to use to decipher it. I did find it
+useful in that it reassured me that there <i>was</i> a pattern to these
+variations, even though I decided that it made more sense to try to decipher
+that pattern in other ways than looking at this image. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>2.35<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
 </span>&quot;Mutation&quot; analysis</p>
 
 <p class=MsoNormal>I decided that the next approach would be to look for
-patterns in where mutations occurred. <span class=GramE>In order to</span> find
-the mutation spacings, we can first take the difference of each row from the
-previous one; non-mutation locations will have zeros and mutation locations
-will have a number representing the effect of the mutation. Doing this reveals
-that all locations fall into one of the following three classes: 1)
-non-mutations, 2) mutations where the mutation effect is a +12 shift in the
-enciphering alphabet, and 3) mutations where the mutation effect is a -14 shift
-in the enciphering alphabet. Since +12 and -14 are equivalent shifts, there are
-<span class=GramE>really only</span> two classes, meaning that all mutations
-function in the same way. Next, if we examine the spacing between mutations, we
-find that most spacings between one mutation and the next are 13 characters,
-but some are 31 characters apart. If we check how many mutations there are
-between each <span class=GramE>31 character</span> spacing, we find that there
-are always either 11 or 12 mutation spacings of 13 between mutation spacings of
-31, and that the pattern of 11 or 12 is strictly alternating. Thus, from the
-first mutation which was preceded by 30 characters with no mutation, there is a
-mutation every 13 characters after that until there have been 11 mutations,
-then there are 31 characters until the 12<sup>th</sup> mutation, and then there
-are mutations every 13 characters until there have been 12 more mutations, and
-then there are 31 characters until the 24<sup>th</sup> mutation, then mutations
-every 13 characters for the next 11 mutations, and so on. [Check the numbering
-here]</p>
+patterns in where mutations occurred. In order to find the mutation spacings,
+we can first take the difference of each row from the previous one;
+non-mutation locations will have zeros and mutation locations will have a
+number representing the effect of the mutation. Doing this reveals that all
+locations fall into one of the following three classes: 1) non-mutations, 2)
+mutations where the mutation effect is a +12 shift in the enciphering alphabet,
+and 3) mutations where the mutation effect is a -14 shift in the enciphering
+alphabet. Since +12 and -14 are equivalent shifts, there are really only two
+classes, meaning that all mutations function in the same way. Next, if we
+examine the spacing between mutations, we find that most spacings between one
+mutation and the next are 13 characters, but some are 31 characters apart. If
+we check how many mutations there are between each 31 character mutation spacing,
+we find that there are always either 11 or 12 mutation spacings of 13 between
+mutation spacings of 31, and that the pattern of 11 or 12 is strictly
+alternating. Thus, from the first mutation which was preceded by 30 characters
+with no mutation, there is a mutation every 13 characters after that until
+there have been 11 mutations, then there are 31 characters until the 12<sup>th</sup>
+mutation, and then there are mutations every 13 characters until there have
+been 12 more mutations, and then there are 31 characters until the 24<sup>th</sup>
+mutation, then mutations every 13 characters for the next 11 mutations, and so
+on. [Check the numbering here]</p>
 
 <p class=MsoNormal>And... we're bascially done. We know the exact mutation
-spacing pattern (which is <span class=GramE>complex</span> but we just figured
-out) and the exact effect of mutations (+12 letter places); to fully determine
-the sequence of cipher alphabets we would just need to establish all of the
-initial conditions, which should be easily derived from the early sequence of
-cipher alphabets. The necessary initial conditions are as follows: </p>
+spacing pattern (which is complex but we just figured out) and the exact effect
+of mutations (+12 letter places); to fully determine the sequence of cipher
+alphabets we would just need to establish all of the initial conditions, which
+should be easily derived from the early sequence of cipher alphabets. The
+necessary initial conditions are as follows: </p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'>1)<span style='font-size:
 7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -16821,39 +16791,44 @@ sequence of starting indices. Recall that each cipher alphabet is constructed
 by adding 19 letter places to the previous cipher alphabet letter. Recasting
 this in letter index math, we can write that </p>
 
-<p class=MsoNormal align=center style='text-align:center'>ciphertextLetterIndex
-= cipherAlphabetStartingLetterIndex + (plaintextLetterIndex - 1) * 19</p>
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-family:Consolas'>ciphertextLetterIndex =
+cipherAlphabetStartingLetterIndex + (plaintextLetterIndex - 1) * 19<o:p></o:p></span></p>
 
 <p class=MsoNormal>We can see this is correct because for a plaintext <span
-class=PlaintextChar>'a'</span> (which has plaintextLetterIndex equal to one
-because 'a' is the first letter of the alphabet), the ciphertextLetterIndex
-ends up being equal to the ciphertextAlphabetStartingLetterIndex. This is
-correct because the cipher alphabet starting letter is the letter which
-replaces plaintext <span class=PlaintextChar>'<span class=GramE>a'<span
-style='font-family:Montserrat;font-style:normal'>s, by definition</span></span></span>.
-Likewise, for all later plaintext letters, the formula guarantees that we are
-shifting forward 19 letter places for each plaintext letter place increment. </p>
+class=PlaintextChar>'a'</span> (which has <span style='font-family:Consolas'>plaintextLetterIndex</span>
+equal to one because 'a' is the first letter of the alphabet), the <span
+style='font-family:Consolas'>ciphertextLetterIndex</span> ends up being equal
+to the <span style='font-family:Consolas'>ciphertextAlphabetStartingLetterIndex</span>.
+This is correct because the cipher alphabet starting letter is the letter which
+replaces plaintext <span class=PlaintextChar>'a'</span><span
+class=PlaintextChar><span style='font-family:Montserrat;font-style:normal'>s,
+by definition</span></span>. Likewise, for all later plaintext letters, the
+formula guarantees that we are shifting forward 19 letter places for each
+plaintext letter place increment. </p>
 
 <p class=MsoNormal>The sequence of cipher alphabet starting letters can be
-viewed as a sequence of cipherAlphabetStartingIndices, and the shifts between
-these letters can be viewed as a set of addtions and subtractions to these
-index values. As noted previously (see Figure 32), <span class=GramE>all of</span>
+viewed as a sequence of <span style='font-family:Consolas'>cipherAlphabetStartingIndices</span>,
+and the shifts between these letters can be viewed as a set of addtions and
+subtractions to these index values. As noted previously (see Figure 32), all of
 these shifts are equivalent to either +9 or -3. Interestingly, thinking about
 the old idea that there were frame shift boundaries which shifted four cipher
 alphabets, the effect of this would have been jumping across a combination of
 +9's and -3's starting index interval shifts, and if we had two of each, the
-sum is +12. A sum of +12 to the cipherAlphabetStartingIndex is equivalent to
-incrementing the plaintext letter index by two, because <span class=GramE>mod(</span>19*2,
-26) = 12. Here it is written out in equation form: </p>
+sum is +12. A sum of +12 to the <span style='font-family:Consolas'>cipherAlphabetStartingIndex</span>
+is equivalent to incrementing the plaintext letter index by two, because <span
+style='font-family:Consolas'>mod(19*2, 26) = 12</span>. Here it is written out
+in equation form: </p>
 
-<p class=MsoNormal align=center style='text-align:center'>mod<span class=GramE>26(
-(</span> (plaintLettIdx - 1) +2) * 19 + cipherAlphabetStartingLetterIndexWithoutMutation)
-= mod26( (plainLettIdx-1)*18 + cipherAlphabetStartingLetterIdxWithMutation)</p>
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-family:Consolas'>mod26( ( (plaintLettIdx - 1) +2) * 19 + cipherAlphabetStartingLetterIndexWithoutMutation)
+= mod26( (plainLettIdx-1)*18 + cipherAlphabetStartingLetterIdxWithMutation)<o:p></o:p></span></p>
 
-<p class=MsoNormal><span class=GramE>where</span> </p>
+<p class=MsoNormal>where </p>
 
-<p class=MsoNormal align=center style='text-align:center'>cipherAlphabetStartingLetterIdxWithMutation
-= cipherAlphabetStartingLetterIdxWithoutMutation + 12</p>
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-family:Consolas'>cipherAlphabetStartingLetterIdxWithMutation =
+cipherAlphabetStartingLetterIdxWithoutMutation + 12<o:p></o:p></span></p>
 
 <p class=MsoNormal>This may be a bit hard to follow, but the upshot is that
 putting a mutation shift of four alphabets in the wrong place will very often
@@ -16866,16 +16841,16 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 </span>From 18 to 13</p>
 
 <p class=MsoNormal>I began investigating what the pattern +9 and -3 interval
-shifts was near mutation locations. I started looking backwards from mutation <span
-class=GramE>locations, and</span> found that there was a consistent sequence
-leading up to each mutation. Very oddly, I found that the sequence of interval
-shifts before long gap mutations matched those before short gap mutations for
-30 characters. It seemed very weird that this was true because short gap mutations
-happened every 13 characters, whereas long gap mutations had a gap of 31
-characters. This means that the long gap contained more than two full cycles of
-13-character interval shifts which were usually associated with a short gap
-mutation occurring. Yet, somehow, the same sequence of interval shifts was NOT
-leading to mutations in the long gaps. I was puzzled by this. </p>
+shifts was near mutation locations. I started looking backwards from mutation
+locations, and found that there was a consistent sequence leading up to each
+mutation. Very oddly, I found that the sequence of interval shifts before long
+gap mutations matched those before short gap mutations for 30 characters. It
+seemed very weird that this was true because short gap mutations happened every
+13 characters, whereas long gap mutations had a gap of 31 characters. This
+means that the long gap contained more than two full cycles of 13-character
+interval shifts which were usually associated with a short gap mutation
+occurring. Yet, somehow, the same sequence of interval shifts was NOT leading
+to mutations in the long gaps. I was puzzled by this. </p>
 
 <div align=center>
 
@@ -16984,10 +16959,10 @@ ciphertext <span class=CiphertextChar>'o'</span>. To find the next offset
 value, we would take the current offset value (3) and add either +9 or -3,
 based on a repeating cycle of offset shifts which has 13 elements: [9, -3, 9,
 9, -3, 9, -3, 9, 9, -3, 9, -3, 9]. Usually, the next offset value shift is just
-the next one in that cycle, however, <span class=GramE>every once in a while</span>,
-we jump ahead 8 places in the cycle (we can call these 'mutations'). These
-'mutations' occur after either 161 or 174 enciphered characters. In a
-pseudocode outline, the algorithm is as follows:</p>
+the next one in that cycle, however, every once in a while, we jump ahead 8
+places in the cycle (we can call these 'mutations'). These 'mutations' occur
+after either 161 or 174 enciphered characters. In a pseudocode outline, the
+algorithm is as follows:</p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'>1.<span style='font-size:
 7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17025,9 +17000,9 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 
 <p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'>a.<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;
-</span>If the plaintext character is not a letter (<span class=GramE>i.e.</span>
-it is a space, a line break, punctuation, a numeral, etc.), immediately
-continue to the next character.</p>
+</span>If the plaintext character is not a letter (i.e. it is a space, a line
+break, punctuation, a numeral, etc.), immediately continue to the next
+character.</p>
 
 <p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'>b.<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17084,14 +17059,14 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 <p class=MsoListParagraph style='margin-left:0in'>&nbsp;</p>
 
 <p class=MsoListParagraph style='margin-left:0in'>Remarkably, the decipherment
-scheme functions in <span class=GramE>exactly the same</span> way as the
-encipherment scheme, with only the following changes:</p>
+scheme functions in exactly the same way as the encipherment scheme, with only
+the following changes:</p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>The offset shift cycle values, <span class=CodeChar>offsetShiftCycle =
-[5, 7, 5, 5, 7, 5, 7, 5, 5, 7, 5, 7, 5]</span> (<span class=GramE>i.e.</span>
-9's become 5's and -3's become 7's)</p>
+[5, 7, 5, 5, 7, 5, 7, 5, 5, 7, 5, 7, 5]</span> (i.e. 9's become 5's and -3's
+become 7's)</p>
 
 <p class=MsoListParagraph style='text-indent:-.25in'><span style='font-family:
 Symbol'>·</span><span style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17116,7 +17091,7 @@ algorithms was implemented according to that conception. I presented the
 algorithm above first because I think it is simpler and cleaner, but I also
 want to share the older version, structured in a similar way, for comparison.
 Here is the original conception overview, followed by a psuedocode
-implementation.:</p>
+implementation:</p>
 
 <p class=MsoNormal>The fundamental idea is that the encipherment scheme
 involves a cycle of 18 cipher alphabets which are mutated as encipherment
@@ -17246,10 +17221,10 @@ line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&n
 
 <p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'>a.<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;
-</span>If the plaintext character is not a letter (<span class=GramE>i.e.</span>
-it is a space, a line break, punctuation, a numeral, etc.), record it unchaged
-as the current ciphertext character and immediately continue to the next
-character (i.e. go back to step 2). Otherwise, continue to step 2b. </p>
+</span>If the plaintext character is not a letter (i.e. it is a space, a line
+break, punctuation, a numeral, etc.), record it unchaged as the current
+ciphertext character and immediately continue to the next character (i.e. go
+back to step 2). Otherwise, continue to step 2b. </p>
 
 <p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'>b.<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17303,8 +17278,7 @@ class=CodeChar>numLettsBetweenMutationsLong</span></p>
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Increment <span class=CodeChar>longGapCountdownsIndex</span><span
 style='font-family:"Courier New"'> </span>by one. If it is greater than 2,
-subtract 2. (<span class=GramE>Basically</span> this alternates between 1 and
-2)</p>
+subtract 2. (Basically this alternates between 1 and 2)</p>
 
 <p class=MsoListParagraph style='margin-left:2.5in;text-indent:-.25in'>c.<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17372,11 +17346,10 @@ obvious that variations of this scheme can easily be created by changing the
 initial values without changing the iterative loop. We could change the
 multiplier, change the initial offset, change how often mutations occur or how
 many places in the offset cycle mutations jump. We could change the length or
-composition of the offset shift cycle. <span class=GramE>All of</span> these
-changes, individually or in combination will affect the mapping between a
-plaintext and ciphertext. Of course, it is also important that we can find the
-corresponding decipherment function for any of the variations of encipherment
-function. </p>
+composition of the offset shift cycle. All of these changes, individually or in
+combination will affect the mapping between a plaintext and ciphertext. Of
+course, it is also important that we can find the corresponding decipherment
+function for any of the variations of encipherment function. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>4.1<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17394,17 +17367,17 @@ all letters will be visited before a letter is repeated. Since the factors of
 26 are 2 and 13, no even multipliers are allowed, and no multiples of 13.
 Multipliers greater than 26 could be allowed, but they will behave identically
 to a multiplier which is mod26 of that multiplier. For example, a multiplier of
-29 is the same as a multiplier of 3, because mod<span class=GramE>26( 29</span>
-* N ) = mod26( 3*N), because mod26 ( (26 + 3)*N ) = mod26( 26N + 3N) = mod26(
-26N) + mod26(3N) and mod26( 26N) = 0 for any integer N. So, without loss of
-generality, we can consider only those multipliers less than 26 which are
-relatively prime with 26. These are [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23,
-25]. Note also that we can empirically determine the paired inverse multiplier for
-each of thes multipliers by simply constructing an alphabet using the
-multiplier, inverting it by rearranging the letter pairs so that the other
-alphabet is in alphabetical order, and then examining the differences between
-letter indices in the other rearranged alphabet. Figure 35 shows the
-correspondence between multipliers and their inverses.</p>
+29 is the same as a multiplier of 3, because mod26( 29 * N ) = mod26( 3*N),
+because mod26 ( (26 + 3)*N ) = mod26( 26N + 3N) = mod26( 26N) + mod26(3N) and
+mod26( 26N) = 0 for any integer N. So, without loss of generality, we can
+consider only those multipliers less than 26 which are relatively prime with
+26. These are [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]. Note also that we
+can empirically determine the paired inverse multiplier for each of thes
+multipliers by simply constructing an alphabet using the multiplier, inverting
+it by rearranging the letter pairs so that the other alphabet is in
+alphabetical order, and then examining the differences between letter indices
+in the other rearranged alphabet. Figure 35 shows the correspondence between
+multipliers and their inverses.</p>
 
 <div align=center>
 
@@ -17585,20 +17558,19 @@ correspondence between multipliers and their inverses.</p>
 etc). These two serve as their own inverses. While there is some symmetry
 visible (5 and 21 are 5 from each edge), there are also some unbalanced
 pairings (why 3 and 9? why 17 and 23?) and it still is not immediately clear
-where the pairings come from on a deeper level. To see this deeper <span
-class=GramE>level</span> we need to think a bit more about the relationship we
-are characterizing. With a given multiplier <span class=CodeChar>M</span>, its
-inverse paired multiplier (let's call it <span class=CodeChar>M'</span>) has
-the property that a shift of <span class=CodeChar>M</span> letter places in one
-alphabet corresponds to a shift of one letter place in the inverse alphabet.
-This is also true in reverse, a shift of <span class=CodeChar>M'</span> letters
-in one alphabet corresponds to a shift of one letter place in the other
-alphabet. Based on this, perhaps you can see that <span class=CodeChar>mod<span
-class=GramE>26( M</span> * M' )</span> must equal <span class=CodeChar>1</span>.
-Therefore, we can identify the paired multiplier by finding which integer
-multiple of <span class=CodeChar>M</span>,<span class=CodeChar> mod26</span><span
-class=CodeChar><span style='font-family:Montserrat'>,</span></span> equals one;
-this integer is <span class=CodeChar>M'</span>. </p>
+where the pairings come from on a deeper level. To see this deeper level we
+need to think a bit more about the relationship we are characterizing. With a
+given multiplier <span class=CodeChar>M</span>, its inverse paired multiplier
+(let's call it <span class=CodeChar>M'</span>) has the property that a shift of
+<span class=CodeChar>M</span> letter places in one alphabet corresponds to a
+shift of one letter place in the inverse alphabet. This is also true in
+reverse, a shift of <span class=CodeChar>M'</span> letters in one alphabet
+corresponds to a shift of one letter place in the other alphabet. Based on
+this, perhaps you can see that <span class=CodeChar>mod26( M * M' )</span> must
+equal <span class=CodeChar>1</span>. Therefore, we can identify the paired
+multiplier by finding which integer multiple of <span class=CodeChar>M</span>,<span
+class=CodeChar> mod26</span><span class=CodeChar><span style='font-family:Montserrat'>,</span></span>
+equals one; this integer is <span class=CodeChar>M'</span>. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>4.2<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17610,13 +17582,11 @@ figure out how to relate the encipherment and decipherment initial offset
 values. The plaintext letter and ciphertext letter are related through the
 following relationship</p>
 
-<p class=Code>ciphLettIdx = mod<span class=GramE>26( (</span>plainLettIdx-1) *
-M + F )</p>
+<p class=Code>ciphLettIdx = mod26( (plainLettIdx-1) * M + F )</p>
 
 <p class=MsoNormal>and </p>
 
-<p class=Code>plainLettIdx = mod<span class=GramE>26( (</span>ciphLettIdx-1) *
-M' + F' )</p>
+<p class=Code>plainLettIdx = mod26( (ciphLettIdx-1) * M' + F' )</p>
 
 <p class=MsoNormal>where <span class=CodeChar>M</span> is the encipherment
 mulitplier, <span class=CodeChar>F</span> is the encipherment initial offset,
@@ -17625,14 +17595,14 @@ corresponding decipherment values. Since these equations must hold for any <span
 class=CodeChar>plainLettIdx</span>, we can simplify things by choosing a <span
 class=CodeChar>plainLettIdx</span> of <span class=CodeChar>1</span>. </p>
 
-<p class=Code>ciphLettIdx = mod<span class=GramE>26( F</span> )</p>
+<p class=Code>ciphLettIdx = mod26( F )</p>
 
-<p class=MsoNormal><span class=CodeChar>mod<span class=GramE>26( F</span> )</span>
-is just <span class=CodeChar>F</span> as long as <span class=CodeChar>F</span>
-is <span class=CodeChar>&lt;=26</span> (and <span class=CodeChar>F</span>
-values greater than 26 have the same effect as <span class=CodeChar>mod26(F)</span>,
-so we can just treat <span class=CodeChar>F</span> as equal to <span
-class=CodeChar>mod26(F)</span> ), so </p>
+<p class=MsoNormal><span class=CodeChar>mod26( F )</span> is just <span
+class=CodeChar>F</span> as long as <span class=CodeChar>F</span> is <span
+class=CodeChar>&lt;=26</span> (and <span class=CodeChar>F</span> values greater
+than 26 have the same effect as <span class=CodeChar>mod26(F)</span>, so we can
+just treat <span class=CodeChar>F</span> as equal to <span class=CodeChar>mod26(F)</span>
+), so </p>
 
 <p class=Code>ciphLettIdx = F</p>
 
@@ -17641,11 +17611,11 @@ set <span class=CodeChar>plainLettIdx</span> to equal <span class=CodeChar>1</sp
 we get</p>
 
 <p class=MsoNormal align=center style='text-align:center'><span class=CodeChar>1
-= mod<span class=GramE>26( (</span>F - 1) M' + F'</span>)</p>
+= mod26( (F - 1) M' + F'</span>)</p>
 
 <p class=MsoNormal>If we solve for <span class=CodeChar>F'</span>, we get</p>
 
-<p class=Code>F' = mod<span class=GramE>26( 1</span> - (F-1) * M' )</p>
+<p class=Code>F' = mod26( 1 - (F-1) * M' )</p>
 
 <p class=MsoNormal>Since we already know how to find <span class=CodeChar>M'</span>
 from <span class=CodeChar>M</span>, this equation allows us to find <span
@@ -17659,13 +17629,13 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 <p class=MsoNormal>The last piece we need to derive paired information for is
 the <span class=CodeChar>offsetShiftCycle</span>. The reasoning here is
 straightforward. An offset shift of size <span class=CodeChar>S</span> means
-advancing the enciphered letter index by <span class=CodeChar>mod<span
-class=GramE>26( S</span> * M )</span>, because each step advances by <span
-class=CodeChar>M</span> letter places. So, by that reasoning, an inverse <span
-class=CodeChar>offsetShiftCycle</span> value (let's call it <span
-class=CodeChar>S'</span>) can be found by the following equation:</p>
+advancing the enciphered letter index by <span class=CodeChar>mod26( S * M )</span>,
+because each step advances by <span class=CodeChar>M</span> letter places. So,
+by that reasoning, an inverse <span class=CodeChar>offsetShiftCycle</span>
+value (let's call it <span class=CodeChar>S'</span>) can be found by the
+following equation:</p>
 
-<p class=Code>S' = mod<span class=GramE>26( M</span>' * (-S) )</p>
+<p class=Code>S' = mod26( M' * (-S) )</p>
 
 <p class=MsoNormal>where <span class=CodeChar>S</span> is the encipherment <span
 class=CodeChar>offsetShiftCycle</span> value. </p>
@@ -17704,11 +17674,11 @@ style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nb
 
 <p class=MsoNormal>The first simple investigation was to look at the effect of
 changing the initial offset from 3 to 4. The resulting ciphertext differs from
-the original ciphertext at every letter, but the structure of repeats is <span
-class=GramE>exactly the same</span> as the original. This is because changing
-only the initial offset shifts every ciphertext letter by the same number of
-letter places (the multiplier times the magnitude of the offset change, mod26).
-It looks different, but for all analytical purposes is unchanged. </p>
+the original ciphertext at every letter, but the structure of repeats is
+exactly the same as the original. This is because changing only the initial
+offset shifts every ciphertext letter by the same number of letter places (the
+multiplier times the magnitude of the offset change, mod26). It looks
+different, but for all analytical purposes is unchanged. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>4.6<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17719,8 +17689,8 @@ As a simple change, I added one more 9 to the end of the original offset shift
 cycle, so that it now had a length of 14 instead of 13. Interestingly, the
 number of repeated words increases slightly to 60, while the total number of
 repeats increases to 77 (though it occurred to me that my checking did not
-verify that the detected repeats were <span class=GramE>actually true</span>
-repeats, which could occur by chance). </p>
+verify that the detected repeats were actually true repeats, which could occur
+by chance). </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>4.7<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -17738,19 +17708,18 @@ by the encipherment function. However, I realized that normal autocorrelation
 wasn't really what I wanted, because an offset value of 26 registers as more
 correlated with an offset value of 25 than with an offset value of 1 (because
 25 is closer to 26 than 1 is), but the cipher alphabet generated by an offset
-value of 26 isn't <span class=GramE>really more</span> correlated to one
-generated by an offset value of 25 than to 1; they're just both different. So,
-I developed a categorical autocorrelation function where the function value is
-the fraction of the overlap in which the offsets match exactly. So, like normal
-autocorrelation, the categorical autocorrelation for a lag of 0 is always 1
-(because the offset value matches with itself at all locations). For another
-lag, if there were 1000 offset values in the region of overlap, and 300 of them
-were identical while 700 were not, then the categorical autocorrelation would
-be 0.3. I expect something like this metric exists in statistical analysis
-already, but I didn't find it on a very quick search, and it seems intuitive
-and simple enough to me to just use it. Figure 36 shows the categorical
-autocorrelation for a text length 10,000 characters for the original
-encipherment/decipherment scheme.</p>
+value of 26 isn't really more correlated to one generated by an offset value of
+25 than to 1; they're just both different. So, I developed a categorical
+autocorrelation function where the function value is the fraction of the
+overlap in which the offsets match exactly. So, like normal autocorrelation,
+the categorical autocorrelation for a lag of 0 is always 1 (because the offset
+value matches with itself at all locations). For another lag, if there were
+1000 offset values in the region of overlap, and 300 of them were identical
+while 700 were not, then the categorical autocorrelation would be 0.3. I expect
+something like this metric exists in statistical analysis already, but I didn't
+find it on a very quick search, and it seems intuitive and simple enough to me
+to just use it. Figure 36 shows the categorical autocorrelation for a text
+length 10,000 characters for the original encipherment/decipherment scheme.</p>
 
 <div align=center>
 
@@ -17792,16 +17761,15 @@ apparently periodic peaks. The tall peaks reach almost back to a categorical
 autocorrelation of 1, meaning that nearly every location in the overlapping
 regions will be enciphered by the identical cipher alphabet to the one used
 that lag value later. On the zoomed view in the lower panel, one can also
-observe that most lags <span class=GramE>actually have</span> an
-autocorrelation value of zero. The first peak after a lag of 0 occurs at a lag
-of 18, which illustrates the structure of general repetition that we observed
-every 18 characters. However, the autocorrelation isn't perfect because of the
-&quot;mutations&quot; which introduce non-<span class=GramE>18 character</span>
-shifts (remember our occasional 31-character mutation spacings?). The lagged
-version has the mutations in a different place and as <span class=GramE>these
-drift</span> out of phase, the autocorrelation peaks every 18 characters drift
-lower and lower. Eventually, they start to come back into phase, but with a
-slight shift, and the shifted peaks rise while the others continue to fall to
+observe that most lags actually have an autocorrelation value of zero. The
+first peak after a lag of 0 occurs at a lag of 18, which illustrates the
+structure of general repetition that we observed every 18 characters. However,
+the autocorrelation isn't perfect because of the &quot;mutations&quot; which
+introduce non-18 character shifts (remember our occasional 31-character
+mutation spacings?). The lagged version has the mutations in a different place
+and as these drift out of phase, the autocorrelation peaks every 18 characters
+drift lower and lower. Eventually, they start to come back into phase, but with
+a slight shift, and the shifted peaks rise while the others continue to fall to
 zero. This is what produces the overlapping mountains appearance to the plots
 in Figure 36. </p>
 
@@ -17809,18 +17777,17 @@ in Figure 36. </p>
 categorical autocorrelation analysis was informative and would be useful for
 looking at variations on the basic encipherment/decipherment schemes. To
 automate the analysis, I decided on a few heuristics to try to characterize
-quasi-periodicity on short, medium, and <span class=GramE>long distance</span>
-scales. First, for short character distances, I found the mode (the most
-frequent single value) of the difference between adjacent peak heights, where
-only peaks which are greater than the mean non-zero autocorrelation value count
-as peaks. Second, for medium character distances, I found the mode of the
-differences between adjacent peaks which are at least 10 characters apart.
-Lastly, to find the periodicity of long-distance high-fidelity peaks, I found
-the mode of the differences between adjacent peaks which were at least 50
-characters apart and had an autocorrelation value of at least 0.9. Using these
-heuristics, the default scheme has an apparent short period of 18 characters,
-an apparent medium period of 18 characters, and an apparent long period of 374
-characters. </p>
+quasi-periodicity on short, medium, and long distance scales. First, for short
+character distances, I found the mode (the most frequent single value) of the
+difference between adjacent peak heights, where only peaks which are greater
+than the mean non-zero autocorrelation value count as peaks. Second, for medium
+character distances, I found the mode of the differences between adjacent peaks
+which are at least 10 characters apart. Lastly, to find the periodicity of
+long-distance high-fidelity peaks, I found the mode of the differences between
+adjacent peaks which were at least 50 characters apart and had an
+autocorrelation value of at least 0.9. Using these heuristics, the default
+scheme has an apparent short period of 18 characters, an apparent medium period
+of 18 characters, and an apparent long period of 374 characters. </p>
 
 <p class=MsoNormal>With these analysis tools in hand, I examined the <span
 class=CodeChar>offsetShiftCycle</span> variant I mentioned above, where the <span
@@ -17861,11 +17828,10 @@ Figure 37 shows the categorical autocorrelation values for this scheme.</p>
 <p class=MsoNormal>Figure 37 is strikingly different from Figure 36. There are
 not similar repetititve patterns visible. Based on the heuristics just
 described, the apparent short period has length 4, the apparent medium period
-is 18, and the apparent long period is non-existent (because there is <span
-class=GramE>no</span> second peak which exceeds autocorrelation of 0.9; the
-highest peak after 0 lag has a value of 0.895 at a lag of 4732). I have not
-investigated this case much more thoroughly. I'm surprised that a medium period
-of 18 shows up again. </p>
+is 18, and the apparent long period is non-existent (because there is no second
+peak which exceeds autocorrelation of 0.9; the highest peak after 0 lag has a
+value of 0.895 at a lag of 4732). I have not investigated this case much more
+thoroughly. I'm surprised that a medium period of 18 shows up again. </p>
 
 <p class=MsoNormal>A period of 18 shows up again because the sum of the next 18
 offsets is a multiple of 26 at 6 of the 14 places in the offset shift cycle.
@@ -18042,18 +18008,17 @@ from? We note that 182 = 14*26/2. The sum of the 14 offset shifts in the <span
 class=CodeChar>offsetShiftCycle</span> is 66 (=57+9), which is not relatively
 prime with 26; they share a factor of 2. Thus, after only half as many cycles
 of the <span class=CodeChar>offsetShiftCycle</span> we will return to having
-the same starting offset for the cycle. <span class=GramE>This is why</span>
-the period is 14*26/2 and not just 14*26. What would the effect be on
-cryptanalysis difficulty? Compared with the mutation-present extended <span
-class=CodeChar>offsetShiftCycle</span> scheme, this no-mutation version would
-be much easier to analyze, and it would likely become apparent that blocks of
-182 characters could be lined up perfectly. It would be daunting to imagine
-trying to build up 182 cipher alphabets, but it would be a solid place to
-start. Compared with the mutation-absent version of the original scheme, it's
-hard to say which would be easier. The shorter period for the extended cycle
-version would be helpful, but I'm not sure whether the complex quasiperiods
-present would be easier or harder than the more consistent phase drift present
-in the other version. </p>
+the same starting offset for the cycle. This is why the period is 14*26/2 and
+not just 14*26. What would the effect be on cryptanalysis difficulty? Compared
+with the mutation-present extended <span class=CodeChar>offsetShiftCycle</span>
+scheme, this no-mutation version would be much easier to analyze, and it would
+likely become apparent that blocks of 182 characters could be lined up
+perfectly. It would be daunting to imagine trying to build up 182 cipher
+alphabets, but it would be a solid place to start. Compared with the
+mutation-absent version of the original scheme, it's hard to say which would be
+easier. The shorter period for the extended cycle version would be helpful, but
+I'm not sure whether the complex quasiperiods present would be easier or harder
+than the more consistent phase drift present in the other version. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>4.11<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -18079,9 +18044,9 @@ multiplier of 1, for example would mean that all cipher alphabets would be
 simply shifted versions of the regular alphabet, which would be particularly
 easy to notice during the decryption process. A multiplier of 25 would also
 make things a bit easier, as all cipher alphabets would be shifted versions of
-the regular alphabet in reverse order, which would also be <span class=GramE>a
-fairly obvious</span> structure to notice. Other than that, though, I think all
-other allowed multipliers would be of approximately equal difficulty. </p>
+the regular alphabet in reverse order, which would also be a fairly obvious
+structure to notice. Other than that, though, I think all other allowed
+multipliers would be of approximately equal difficulty. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>4.12<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;
@@ -18095,18 +18060,18 @@ our sampling to slightly greater lags (with a correspondingly longer sample of
 offsets). We find that the true repetition period for the original scheme is
 8,710 characters. We can observe that if we divide 8710 by 26, we get 335,
 which is 161+174, the sum of our two alternating mutation shift intervals. It
-seems like we can suspect that the net offset shift after two mutation shifts (<span
-class=GramE>i.e.</span> after an interval of 161 and and interval of 174
-characters) is relatively prime to 26, and therefore we need to go through 26 *
-(161+174) characters before the offset pattern repeats. If we check this, the
-sum of the first 335 offset shifts, mod26, is 11, which is relatively prime to
-26, as expected. After two mutation shifts of +8 places in the
-offsetShiftCycle, the net shift in the cycle of 13 is +3 places (or,
-equivalently, back 10 places). Since 338 is a multiple of 13, and 335 is back
-three places from 338, this means that after the full 2-mutation cycle, we are
-back in phase with the 13-place <span class=CodeChar>offsetShiftCycle</span>.
-If this were not the case, then we would generally also need to multiply by 13
-to get the true repetition period. </p>
+seems like we can suspect that the net offset shift after two mutation shifts
+(i.e. after an interval of 161 and and interval of 174 characters) is
+relatively prime to 26, and therefore we need to go through 26 * (161+174)
+characters before the offset pattern repeats. If we check this, the sum of the
+first 335 offset shifts, mod26, is 11, which is relatively prime to 26, as
+expected. After two mutation shifts of +8 places in the offsetShiftCycle, the
+net shift in the cycle of 13 is +3 places (or, equivalently, back 10 places).
+Since 338 is a multiple of 13, and 335 is back three places from 338, this
+means that after the full 2-mutation cycle, we are back in phase with the
+13-place <span class=CodeChar>offsetShiftCycle</span>. If this were not the
+case, then we would generally also need to multiply by 13 to get the true
+repetition period. </p>
 
 <p class=MsoNormal>For the mutation-present, extended <span class=CodeChar>offsetShiftCycle</span>
 scheme we have investigated, after the 335 character 2-mutation cycle we are
@@ -18117,8 +18082,8 @@ which is the value I guessed when I started trying to think out what to expect
 in this case. 335 for the pair of mutations, 14 for the <span class=CodeChar>offsetShiftCycle</span>
 length, 26 for the regular alphabet, and divide by 2 because the sum of the <span
 class=CodeChar>offsetShiftCycle</span> shares a factor of two with 26. Figure
-40 shows the autocorrelation out past 65,000 characters (on a <span
-class=GramE>90,000 character</span> sample of offset shifts). </p>
+40 shows the autocorrelation out past 65,000 characters (on a 90,000 character
+sample of offset shifts). </p>
 
 <div align=center>
 
@@ -18174,41 +18139,40 @@ there was not a clear repeating pseudostructure would be far more challenging,
 because I would not have been able to begin to construct the cipher alphabets.
 Because I was able to construct partial cipher alphabets, even though they had
 errors, I was also able to see that they had a structure, and that different
-cipher alphabets <span class=GramE>actually had</span> the same structure. This
-allowed construction of the consensus cipher alphabet, which allowed enough
-decipherment of the plaintext to enable full decipherment of the plaintext. In
-turn, the full plaintext enabled figuring out the details of the
-encipherment/decipherment scheme. </p>
+cipher alphabets actually had the same structure. This allowed construction of
+the consensus cipher alphabet, which allowed enough decipherment of the
+plaintext to enable full decipherment of the plaintext. In turn, the full
+plaintext enabled figuring out the details of the encipherment/decipherment
+scheme. </p>
 
 <p class=MsoNormal>Several open questions I have are related to the offset shift
-cycle. Where did this <span class=GramE>particular sequence</span> of 13
-numbers come from? Is there a rule or algorithm which allows one to construct
-it simply? Why only 9's and -3's? Was it designed to produce an 18-length
-pseudocycle, or was that a happy or unhappy accident? Is there another way to
-understand the offset shift cycle mutations? As noted in section 2.37, we can
-view the mutations as shifting the whole cycle forward 8 or backwards 5 places,
-or we can view the mutations as swapping an adjacent 9 and -3 at a particular
-point in the cycle. Looking at it this second way allows us to understand more
-clearly why this change leaves much of the following pattern intact for a
-while: the net effect of +9 and -3 is +6 regardless of which order they are
-applied, so while the cipher alphabet used for the character at the location of
-the swap is changed, the cipher alphabet used for the next character is the
-same one as was used for the character 18 characters earlier, even though the
-pattern just changed. I strongly suspect that there is another, simpler way to
-see, generate, or remember this sequence than as a 13-element list containing
-only two values. However, I have not yet been able to discover such a way. </p>
+cycle. Where did this particular sequence of 13 numbers come from? Is there a
+rule or algorithm which allows one to construct it simply? Why only 9's and
+-3's? Was it designed to produce an 18-length pseudocycle, or was that a happy
+or unhappy accident? Is there another way to understand the offset shift cycle
+mutations? As noted in section 2.37, we can view the mutations as shifting the
+whole cycle forward 8 or backwards 5 places, or we can view the mutations as
+swapping an adjacent 9 and -3 at a particular point in the cycle. Looking at it
+this second way allows us to understand more clearly why this change leaves
+much of the following pattern intact for a while: the net effect of +9 and -3
+is +6 regardless of which order they are applied, so while the cipher alphabet
+used for the character at the location of the swap is changed, the cipher
+alphabet used for the next character is the same one as was used for the
+character 18 characters earlier, even though the pattern just changed. I
+strongly suspect that there is another, simpler way to see, generate, or
+remember this sequence than as a 13-element list containing only two values.
+However, I have not yet been able to discover such a way. </p>
 
 <p class=MsoNormal>Another question is, what led to the introduction of the
 offset shift cycle mutations? My current suspicion is that the code designer
-came up with the offset shift cycle scheme creating a polyalphabetic affine <span
-class=GramE>cipher, but</span> felt like it still ended up having too much
-regularity. Without offset shift cycle mutations, the sequence of cipher
-alpahbets repeats every 338 characters (=13*26, which arises because the net
-effect of each <span class=GramE>13 shift</span> cycle is an offset shift of
-57, which is relatively prime with 26, so it takes 26 cycles of 13 to get back
-to the same starting point). This may have seemed shorter than desired, as it
-is not very much text (the ciphertext provided is &gt;10x this <span
-class=GramE>cycle</span> length). Introducing shift mutations at alternating
+came up with the offset shift cycle scheme creating a polyalphabetic affine
+cipher, but felt like it still ended up having too much regularity. Without
+offset shift cycle mutations, the sequence of cipher alpahbets repeats every
+338 characters (=13*26, which arises because the net effect of each 13 shift
+cycle is an offset shift of 57, which is relatively prime with 26, so it takes
+26 cycles of 13 to get back to the same starting point). This may have seemed
+shorter than desired, as it is not very much text (the ciphertext provided is
+&gt;10x this cycle length). Introducing shift mutations at alternating
 intervals of 161 and 174 characters extends the exact repeat length out to
 8,710 characters, which is over 2x the ciphertext length. I'm unsure where the
 numbers 161 and 174 came from, though I would note that they are approximately
@@ -18242,21 +18206,21 @@ rather than partway through a loop. </p>
 <p class=MsoNormal>Methods which reduce the memory requirements needed to set
 up and implement the cipher are also attractive. An affine cipher reduces the
 problem of remembering a possibly arbitrary ordering of 26 letters down to
-remembering just two numbers, a <span class=GramE>multiplier</span> and an
-offset. The current scheme, as I have laid it out, requires remembering about
-18 numbers (the multiplier, the initial offset, the two mutation gap lengths,
-the mutation shift amount, and the 13 values in the offsetShiftCycle), which
-still seems like a lot. If there were a mnemonic or simple way to generate the
-offset shift cycle, the memory requirements could drop to maybe about 7 numbers
-or so (maybe even 6 or so if there's a simple rule which relates the two
-mutation gap lengths so that remembering them is essentially the same as
-remembering one number), which seems much less burdensome. At that point, it
-could probably easily be committed to memory (like a phone number) without the
-need for any compromising physical notes or objects (though such things would
-certainly need to be generated at the time of encipherment or decipherment).
-Such compact representation would be appealing for intellectual and aesthetic
-reasons as well as practical reasons, and are another reason to suspect it may
-exist, thus far undiscovered by me. </p>
+remembering just two numbers, a multiplier and an offset. The current scheme,
+as I have laid it out, requires remembering about 18 numbers (the multiplier,
+the initial offset, the two mutation gap lengths, the mutation shift amount,
+and the 13 values in the offsetShiftCycle), which still seems like a lot. If
+there were a mnemonic or simple way to generate the offset shift cycle, the
+memory requirements could drop to maybe about 7 numbers or so (maybe even 6 or
+so if there's a simple rule which relates the two mutation gap lengths so that
+remembering them is essentially the same as remembering one number), which
+seems much less burdensome. At that point, it could probably easily be
+committed to memory (like a phone number) without the need for any compromising
+physical notes or objects (though such things would certainly need to be
+generated at the time of encipherment or decipherment). Such compact
+representation would be appealing for intellectual and aesthetic reasons as
+well as practical reasons, and are another reason to suspect it may exist, thus
+far undiscovered by me. </p>
 
 <p class=Section style='margin-left:.4in;text-indent:-.4in'>5.1<span
 style='font-size:7.0pt;line-height:105%;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -18279,13 +18243,13 @@ give up. It was also intellectually engaging to try to get inside the head of
 the code creator, who I know almost nothing about except that I think they were
 a college student (although it could have been a faculty member) at the
 university where my dad was the chair of the Math and Computer Science program.
-It would be very interesting to talk to that person, show them this <span
-class=GramE>work</span>, and hear how they conceived of their scheme. I bet
-they understand it and implemented it a different way than I have, and it would
-be fascinating to see how they correspond. I may yet tinker with more
-variations and discover something which leads me to a better guess at how the
-creator understood their code, but, after ~20 years of thinking about it and
-&gt;30,000 words of analysis, I could probably also stop here. </p>
+It would be very interesting to talk to that person, show them this work, and
+hear how they conceived of their scheme. I bet they understand it and
+implemented it a different way than I have, and it would be fascinating to see
+how they correspond. I may yet tinker with more variations and discover
+something which leads me to a better guess at how the creator understood their
+code, but, after ~20 years of thinking about it and &gt;30,000 words of
+analysis, I could probably also stop here. </p>
 
 <p class=MsoNormal>&nbsp;</p>
 
